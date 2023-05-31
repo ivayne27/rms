@@ -10,7 +10,7 @@
 		  </div>
 		  <div class="modal-footer">
 		      <button class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Close</button>
-		      <a href="<?php echo WEB_ROOT; ?>admin/logout.php" class="btn btn-info"><i class="icon-off"></i> Logout</a>
+		      <a href="/admin/logout.php" class="btn btn-info"><i class="icon-off"></i> Logout</a>
 		  </div>
 		</div> 
     </div>
@@ -64,7 +64,7 @@ echo $resid;
 		  </div>
 		  <div class="modal-footer">
 		      <button class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Close</button>
-		      <a href="<?php echo WEB_ROOT; ?>admin/logout.php" class="btn btn-info"><i class="icon-off"></i> Logout</a>
+		      <a href="/admin/logout.php" class="btn btn-info"><i class="icon-off"></i> Logout</a>
 		  </div>
 		</div> 
     </div>

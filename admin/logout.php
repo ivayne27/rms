@@ -18,5 +18,5 @@ foreach($_SESSION as $k => $v){
 
  	
 // 4. Destroy the session
-redirect(WEB_ROOT ."admin/index.php?logout=1");
+redirect("/admin/index.php?logout=1");
 ?>
