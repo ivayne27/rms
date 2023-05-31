@@ -11,16 +11,16 @@ require_once("../../includes/initialize.php");
 <title><?php echo isset($title) ? $title   :  ' ' ; ?></title>
 
 
-<link href="<?php echo WEB_ROOT; ?>admin/css/bootstrap.min.css" rel="stylesheet">
-<link href="<?php echo WEB_ROOT; ?>admin/css/dataTables.bootstrap.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>admin/css/jquery.dataTables.css">
-<link href="<?php echo WEB_ROOT; ?>admin/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/js/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/js/jquery.dataTables.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/js/bootstrap.min.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/js/bootstrap-modal.js"></script>
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
+<link href="/admin/css/bootstrap.min.css" rel="stylesheet">
+<link href="/admin/css/dataTables.bootstrap.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" type="text/css" href="/admin/css/jquery.dataTables.css">
+<link href="/admin/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<script type="text/javascript" language="javascript" src="/admin/js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="/admin/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="/admin/js/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="/admin/js/bootstrap-modal.js"></script>
+<script type="text/javascript" src="/admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
 </head> 
 
  <body >

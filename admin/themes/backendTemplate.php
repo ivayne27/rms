@@ -9,18 +9,18 @@
 
 
     <!-- WEB_ROOT means get the first file directory or location ex. dragonhouse/folder/file.php -->
-<link href="<?php echo WEB_ROOT; ?>admin/css/bootstrap.min.css" rel="stylesheet">
-<link href="<?php echo WEB_ROOT; ?>admin/css/dataTables.bootstrap.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>admin/css/jquery.dataTables.css">
-<link href="<?php echo WEB_ROOT; ?>admin/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<link href="/admin/css/bootstrap.min.css" rel="stylesheet">
+<link href="/admin/css/dataTables.bootstrap.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" type="text/css" href="/admin/css/jquery.dataTables.css">
+<link href="/admin/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/js/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/js/jquery.dataTables.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/js/bootstrap.min.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/js/bootstrap-modal.js"></script>
+<script type="text/javascript" language="javascript" src="/admin/js/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="/admin/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="/admin/js/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="/admin/js/bootstrap-modal.js"></script>
 
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
 </head>
 <script type="text/javascript">
 //execute if all html elemen has been completely loaded
@@ -148,7 +148,7 @@ $(document).ready(function() {
     } ).draw();
 } );
     </script>
-    <link href="<?php echo WEB_ROOT; ?>admin/css/offcanvas.css" rel="stylesheet">
+    <link href="/admin/css/offcanvas.css" rel="stylesheet">
 <?php
 
  admin_logged_in();
@@ -165,13 +165,13 @@ $(document).ready(function() {
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	          </button>
-	          <!-- <a class="navbar-brand" href="<?php echo WEB_ROOT; ?>index.php">Magbanua's Beach Resort</a> -->
+	          <!-- <a class="navbar-brand" href="/index.php">Magbanua's Beach Resort</a> -->
 	        </div>
 	        <div class="collapse navbar-collapse">
 	          <ul class="nav navbar-nav">
-	            <li class="<?php echo (currentpage() == 'index.php') ? "active" : false;?>"><a href="<?php echo WEB_ROOT; ?>admin/index.php" >Home</a></li>
-	            <li class="<?php echo (currentpage() == 'mod_room') ? "active" : false;?>"><a href="<?php echo WEB_ROOT; ?>admin/mod_room/index.php">Services</a></li>
-	            <li class="<?php echo (currentpage() == 'mod_accomodation') ? "active" : false;?>"><a href="<?php echo WEB_ROOT; ?>admin/mod_accomodation/index.php">Accomodation</a></li>
+	            <li class="<?php echo (currentpage() == 'index.php') ? "active" : false;?>"><a href="/admin/index.php" >Home</a></li>
+	            <li class="<?php echo (currentpage() == 'mod_room') ? "active" : false;?>"><a href="/admin/mod_room/index.php">Services</a></li>
+	            <li class="<?php echo (currentpage() == 'mod_accomodation') ? "active" : false;?>"><a href="/admin/mod_accomodation/index.php">Accomodation</a></li>
 				
 	            <li class="<?php echo (currentpage() == 'mod_reservation') ? "active" : false;?>">
             	<?php
@@ -180,15 +180,15 @@ $(document).ready(function() {
 				$cur = $mydb->loadResultList();  
 				foreach ($cur as $result) { 
 				?>
-	            <a href="<?php echo WEB_ROOT; ?>admin/mod_reservation/index.php">Reservation <?php  echo  isset($result->Total) ? '<span style="color:red">(' .$result->Total . ')</span>' : '';?> </a>
+	            <a href="/admin/mod_reservation/index.php">Reservation <?php  echo  isset($result->Total) ? '<span style="color:red">(' .$result->Total . ')</span>' : '';?> </a>
 	              <?php 
 	            	}
 	            ?>
 	            </li>
 
-	             <li class="<?php echo (currentpage() == 'mod_reports') ? "active" : false;?>"><a href="<?php echo WEB_ROOT; ?>admin/mod_reports/index.php">Reports</a></li>
+	             <li class="<?php echo (currentpage() == 'mod_reports') ? "active" : false;?>"><a href="/admin/mod_reports/index.php">Reports</a></li>
 	            <?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
-	             <li class="<?php echo (currentpage() == 'mod_users') ? "active" : false;?>"><a href="<?php echo WEB_ROOT; ?>admin/mod_users/index.php" >Users</a></li>
+	             <li class="<?php echo (currentpage() == 'mod_users') ? "active" : false;?>"><a href="/admin/mod_users/index.php" >Users</a></li>
 	             <?php } ?>
 	            <li class="<?php echo (currentpage() == 'logout.php') ? "active" : false;?>"><a class="toggle-modal" href="#logout">Logout</a></li>
 	          </ul>
@@ -208,20 +208,20 @@ $(document).ready(function() {
 	<!--/row-->
 	
 	<hr>
-<script src="<?php echo WEB_ROOT; ?>admin/jquery/jquery.min.js"></script> 
-<script src="<?php echo WEB_ROOT; ?>admin/js/bootstrap.min.js"></script>
+<script src="/admin/jquery/jquery.min.js"></script> 
+<script src="/admin/js/bootstrap.min.js"></script>
 
- <script src="<?php echo WEB_ROOT; ?>js/jquery.dataTables.min.js"></script>
-  <script src="<?php echo WEB_ROOT; ?>js/dataTables.bootstrap.min.js"></script>
+ <script src="/js/jquery.dataTables.min.js"></script>
+  <script src="/js/dataTables.bootstrap.min.js"></script>
 
 
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>js/bootstrap-datepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>js/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/js/bootstrap-datepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<!-- <script type="text/javascript" src="/js/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script> -->
 
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/input-mask/jquery.inputmask.js"></script> 
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/input-mask/jquery.inputmask.date.extensions.js"></script> 
-<script type="text/javascript" language="javascript" src="<?php echo WEB_ROOT; ?>admin/input-mask/jquery.inputmask.extensions.js"></script> 
+<script type="text/javascript" language="javascript" src="/admin/input-mask/jquery.inputmask.js"></script> 
+<script type="text/javascript" language="javascript" src="/admin/input-mask/jquery.inputmask.date.extensions.js"></script> 
+<script type="text/javascript" language="javascript" src="/admin/input-mask/jquery.inputmask.extensions.js"></script> 
  
 	     <footer>
         <p>

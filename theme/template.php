@@ -18,20 +18,20 @@ $_SESSION['to']  = $_POST['to'];
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="RESORT">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT;?>styles/bootstrap-4.1.2/bootstrap.min.css">
-<link href="<?php echo WEB_ROOT;?>plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT;?>plugins/OwlCarousel2-2.3.4/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT;?>plugins/OwlCarousel2-2.3.4/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT;?>plugins/OwlCarousel2-2.3.4/animate.css">
-<link href="<?php echo WEB_ROOT;?>plugins/jquery-datepicker/jquery-ui.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT;?>styles/main_styles.css">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT;?>styles/responsive.css">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT;?>styles/custom-navbar.css">
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT;?>styles/bootstrap.css">
- <link href="<?php echo WEB_ROOT; ?>styles/ekko-lightbox.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/styles/bootstrap-4.1.2/bootstrap.min.css">
+<link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.3.4/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.3.4/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.3.4/animate.css">
+<link href="/plugins/jquery-datepicker/jquery-ui.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="/styles/responsive.css">
+<link rel="stylesheet" type="text/css" href="/styles/custom-navbar.css">
+<link rel="stylesheet" type="text/css" href="/styles/bootstrap.css">
+ <link href="/styles/ekko-lightbox.css" rel="stylesheet">
 
- <link href="<?php echo WEB_ROOT; ?>styles/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
- <link href="<?php echo WEB_ROOT; ?>styles/datepicker.css" rel="stylesheet" media="screen">
+ <link href="/styles/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+ <link href="/styles/datepicker.css" rel="stylesheet" media="screen">
 
 <?php
 if (isset($_SESSION['dragonhouse_cart'])){
@@ -66,15 +66,15 @@ if (isset($_SESSION['activity'])){
                             <center><h2 style="color:white;">Aritao, Nueva Vizcaya</h2></center>
     </div>
       <!-- Logo -->
-      <div class="logo"><a href="#"><img class="logo_1" src="<?php echo WEB_ROOT;?>images/logo.png" alt=""><img class="logo_2" src="<?php echo WEB_ROOT;?>images/logo_2.png" alt=""><img class="logo_3" src="<?php echo WEB_ROOT;?>images/logo_3.png" alt=""></a></div>
+      <div class="logo"><a href="#"><img class="logo_1" src="/images/logo.png" alt=""><img class="logo_2" src="/images/logo_2.png" alt=""><img class="logo_3" src="/images/logo_3.png" alt=""></a></div>
 
       <!-- Main Nav -->
       <nav class="main_nav">
         <ul class="d-flex flex-row align-items-center justify-content-start">
-           <li><a href="<?php echo WEB_ROOT;?>index.php">Home</a></li>
-          <!-- <li><a href="<?php echo WEB_ROOT;?>index.php?p=about">About us</a></li> -->
-          <li><a href="<?php echo WEB_ROOT;?>index.php?p=rooms">Services</a></li> 
-          <!--li><a href="<?php echo WEB_ROOT;?>index.php?p=contact">Contact</a></li> -->
+           <li><a href="/index.php">Home</a></li>
+          <!-- <li><a href="/index.php?p=about">About us</a></li> -->
+          <li><a href="/index.php?p=rooms">Services</a></li> 
+          <!--li><a href="/index.php?p=contact">Contact</a></li> -->
         </ul>
       </nav>
 
@@ -113,7 +113,7 @@ if (isset($_SESSION['activity'])){
       <!-- Search Panel -->
       <div class="search_panel">
         <div class="search_panel_content d-flex flex-row align-items-center justify-content-start">
-          <img src="<?php echo WEB_ROOT;?>images/search.png" alt="">
+          <img src="/images/search.png" alt="">
           <form action="#" class="search_form">
             <input type="text" class="search_input" placeholder="Type your search here" required="required">
           </form>
@@ -128,7 +128,7 @@ if (isset($_SESSION['activity'])){
 
   <!--div class="logo_overlay">
     <div class="logo_overlay_content d-flex flex-column align-items-center justify-content-center">
-      <div class="logo"><a href="#"><img src="<?php echo WEB_ROOT;?>images/logo_3.png" alt=""></a></div>
+      <div class="logo"><a href="#"><img src="/images/logo_3.png" alt=""></a></div>
     </div>
   </div>
 
@@ -151,10 +151,10 @@ if (isset($_SESSION['activity'])){
       <!-- Menu Navigation -->
       <nav class="menu_nav text-center">
         <ul>
-          <li><a href="<?php echo WEB_ROOT;?>index.php">Home</a></li>
-          <li><a href="<?php echo WEB_ROOT;?>index.php?p=about">About us</a></li>
-          <li><a href="<?php echo WEB_ROOT;?>index.php?p=rooms">Services</a></li> 
-          <li><a href="<?php echo WEB_ROOT;?>index.php?p=contact">Contact</a></li>
+          <li><a href="/index.php">Home</a></li>
+          <li><a href="/index.php?p=about">About us</a></li>
+          <li><a href="/index.php?p=rooms">Services</a></li> 
+          <li><a href="/index.php?p=contact">Contact</a></li>
         </ul>
       </nav>
       <div class="button menu_button"><a href="#">Reserve Now</a></div>
@@ -177,7 +177,7 @@ if (isset($_SESSION['activity'])){
   <!-- Home -->
 
   <div class="home">
-    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="<?php echo WEB_ROOT;?>images/home.jpg" data-speed="0.8"></div>
+    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="/images/home.jpg" data-speed="0.8"></div>
     <div class="home_container d-flex flex-column align-items-center justify-content-center">
       <div class="home_title"><h1>Welcome!</h1></div>
       <div class="home_text text-center"></div>
@@ -192,7 +192,7 @@ if (isset($_SESSION['activity'])){
       <div class="row">
         <div class="col">
           <div class="booking_container d-flex flex-row  justify-content-start"> 
-            <form action="<?php echo WEB_ROOT;?>index.php?p=booking" method="POST" class="booking_form" autocomplete="off">
+            <form action="/index.php?p=booking" method="POST" class="booking_form" autocomplete="off">
               <div class="booking_form_container d-flex flex-lg-row flex-column align-items-start justify-content-start flex-wrap">
                 <div class="booking_form_inputs d-flex flex-row align-items-start justify-content-between flex-wrap">
                   <!--<div hidden class="booking_dropdown"><input type="text" class="datepicker booking_input booking_input_a booking_in" placeholder="Check in" name="arrival" required="required" value="<?php echo isset($_POST['arrival']) ? $_POST['arrival'] :date('m/d/Y');?>"></div> -->
@@ -266,7 +266,7 @@ if (isset($_SESSION['activity'])){
 
  
   <footer class="footer">
-    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="<?php echo WEB_ROOT;?>images/footer.jpg" data-speed="0.8"></div>
+    <div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="/images/footer.jpg" data-speed="0.8"></div>
     <div class="container">
       <div class="row">
         <div class="col">
@@ -310,27 +310,27 @@ if (isset($_SESSION['activity'])){
   </footer>
 </div>
 
-<script src="<?php echo WEB_ROOT;?>js/jquery-3.3.1.min.js"></script>
-<script src="<?php echo WEB_ROOT;?>styles/bootstrap-4.1.2/popper.js"></script>
-<script src="<?php echo WEB_ROOT;?>styles/bootstrap-4.1.2/bootstrap.min.js"></script>
-<script src="<?php echo WEB_ROOT;?>plugins/greensock/TweenMax.min.js"></script>
-<script src="<?php echo WEB_ROOT;?>plugins/greensock/TimelineMax.min.js"></script>
-<script src="<?php echo WEB_ROOT;?>plugins/scrollmagic/ScrollMagic.min.js"></script>
-<script src="<?php echo WEB_ROOT;?>plugins/greensock/animation.gsap.min.js"></script>
-<script src="<?php echo WEB_ROOT;?>plugins/greensock/ScrollToPlugin.min.js"></script>
-<!-- <script src="<?php echo WEB_ROOT;?>plugins/OwlCarousel2-2.3.4/owl.carousel.js"></script> -->
-<script src="<?php echo WEB_ROOT;?>plugins/easing/easing.js"></script>
-<script src="<?php echo WEB_ROOT;?>plugins/progressbar/progressbar.min.js"></script>
-<script src="<?php echo WEB_ROOT;?>plugins/parallax-js-master/parallax.min.js"></script>
-<script src="<?php echo WEB_ROOT;?>plugins/jquery-datepicker/jquery-ui.js"></script>
- <script src="<?php echo WEB_ROOT; ?>js/ekko-lightbox.js"></script> 
-<script src="<?php echo WEB_ROOT;?>js/custom.js"></script>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/styles/bootstrap-4.1.2/popper.js"></script>
+<script src="/styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+<script src="/plugins/greensock/TweenMax.min.js"></script>
+<script src="/plugins/greensock/TimelineMax.min.js"></script>
+<script src="/plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="/plugins/greensock/animation.gsap.min.js"></script>
+<script src="/plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="/plugins/OwlCarousel2-2.3.4/owl.carousel.js"></script>
+<script src="/plugins/easing/easing.js"></script>
+<script src="/plugins/progressbar/progressbar.min.js"></script>
+<script src="/plugins/parallax-js-master/parallax.min.js"></script>
+<script src="/plugins/jquery-datepicker/jquery-ui.js"></script>
+ <script src="/js/ekko-lightbox.js"></script> 
+<script src="/js/custom.js"></script>
 
 
 
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>js/bootstrap-datepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="<?php echo WEB_ROOT; ?>js/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/js/bootstrap-datepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<!-- <script type="text/javascript" src="/js/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script> -->
 </body>
 </html>
 <!-- Modal photo -->
@@ -344,7 +344,7 @@ if (isset($_SESSION['activity'])){
                   <h4 class="modal-title" id="myModalLabel">Choose Image.</h4>
                 </div>
 
-                <form action="<?php echo WEB_ROOT; ?>guest/update.php" enctype="multipart/form-data" method=
+                <form action="/guest/update.php" enctype="multipart/form-data" method=
                 "post">
                   <div class="modal-body">
                     <div class="form-group">
