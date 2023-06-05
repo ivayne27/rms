@@ -11,6 +11,9 @@
     <!-- WEB_ROOT means get the first file directory or location ex. dragonhouse/folder/file.php -->
 <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
 <link href="/admin/css/dataTables.bootstrap.css" rel="stylesheet" media="screen">
+<link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" media="screen">
+<link href="/styles/datepicker.css" rel="stylesheet" >
+<link href="/admin/css/style.css" rel="stylesheet" >
 <link rel="stylesheet" type="text/css" href="/admin/css/jquery.dataTables.css">
 <link href="/admin/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -21,6 +24,7 @@
 
 <script type="text/javascript" src="/admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="/admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/js/custom.js" charset="UTF-8"></script>
 </head>
 <script type="text/javascript">
 //execute if all html elemen has been completely loaded
@@ -169,13 +173,14 @@ $(document).ready(function() {
 	        </div>
 	        <div class="collapse navbar-collapse">
 	          <ul class="nav navbar-nav">
-	            <li class="<?php echo (currentpage() == 'index.php') ? "active" : false;?>"><a href="/admin/index.php" >Home</a></li>
+	            <!-- <li class="<?php echo (currentpage() == 'index.php') ? "active" : false;?>"><a href="/admin/index.php" >Home</a></li> -->
 	            <li class="<?php echo (currentpage() == 'mod_room') ? "active" : false;?>"><a href="/admin/mod_room/index.php">Services</a></li>
-	            <li class="<?php echo (currentpage() == 'mod_accomodation') ? "active" : false;?>"><a href="/admin/mod_accomodation/index.php">Accomodation</a></li>
+	            <!-- <li class="<?php echo (currentpage() == 'mod_accomodation') ? "active" : false;?>"><a href="/admin/mod_accomodation/index.php">Accomodation</a></li> -->
 				
 	            <li class="<?php echo (currentpage() == 'mod_reservation') ? "active" : false;?>">
             	<?php
-				$query = "SELECT count(*) as 'Total' FROM `tblpayment` WHERE `STATUS`='Pending'";
+				$query = "SELECT count(*) as 'Total' FROM `tblreservation` WHERE `STATUS`='Pending' AND `REMARKS` = ''";
+				// $query = "SELECT count(*) as 'Total' FROM `tblpayment` WHERE `STATUS`='Pending'";
 				$mydb->setQuery($query);
 				$cur = $mydb->loadResultList();  
 				foreach ($cur as $result) { 

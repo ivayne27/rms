@@ -32,8 +32,17 @@ switch ($action) {
 	case 'insertitem' :
 		doInsertNewItem();
 	break;
+	case 'additem' :
+		doAddItem();
+	break;
+	case 'addpay' :
+		doAddPay();
+	break;
 	case 'deleteitem' :
 		deleteitem();
+	break;
+	case 'markaspaid' :
+		doMarkAsPaid();
 	break;
 	}
 function doCheckout(){
@@ -77,7 +86,7 @@ redirect('index.php');
 function doCancel(){
 global $mydb;
 
-$sql = "UPDATE `tblreservation` r,tblroom rm SET ROOMNUM=ROOMNUM + 1 WHERE r.`ROOMID`=rm.`ROOMID` AND `CONFIRMATIONCODE` ='" . $_GET['code'] ."'";
+$sql = "UPDATE `tblreservation` r,tblaccomodation rm SET ROOMNUM=ROOMNUM + 1 WHERE r.`ACCOMOID`=rm.`ACCOMID` AND `CONFIRMATIONCODE` ='" . $_GET['code'] ."'";
 $mydb->setQuery($sql);
 $mydb->executeQuery(); 
 
@@ -120,16 +129,36 @@ redirect('index.php');
 }
 function doInsertNewItem(){ 
 	global $mydb;
-	$sql = "INSERT into tblreservation (CONFIRMATIONCODE,ROOMID,RPRICE,GUESTID)
-	values ('" . $_GET['code'] ."','" . $_GET['roomid'] ."','" . $_GET['price'] ."','" . $_GET['user'] ."')";
-	echo $sql;
-	$mydb->setQuery($sql);
-	$mydb->executeQuery(); 
-	redirect('index.php?view=view&code=' . $_GET['code'] .'');
+	$code = $_GET['code'];
+	// var_dump($code);
+	$existingItemSql = "SELECT * from `tblreservation` where `CONFIRMATIONCODE` = '".$code."' limit 1";
+	// var_dump($existingItemSql);
+	$mydb->setQuery($existingItemSql);
+	$resItem = current($mydb->loadResultList()); 
+	// var_dump($resItem);
+	// die;
+	// $qty = (int) $_GET['qty'];
+	// var_dump($_GET['qty'], $qty);
+	for ($i = 0; $i < $_GET['qty']; $i++) {
+		$sql = "INSERT into tblreservation (CONFIRMATIONCODE,ACCOMOID,RPRICE,GUESTID,TRANSDATE,ARRIVAL,DEPARTURE,PRORPOSE,STATUS,BOOKDATE,REMARKS,USERID,client_name,mnumber,address)
+			values ('" . $_GET['code'] ."','" . $_GET['accomid'] ."','" . $_GET['price'] ."','" . $_GET['user'] ."','". date('Y-m-d h:i:s') ."','".$resItem->ARRIVAL."','".$resItem->DEPARTURE."','Travel','".$resItem->STATUS."','".date('Y-m-d h:i:s')."','additional','".$resItem->USERID."','".$resItem->client_name."','".$resItem->mnumber."','".$resItem->address."')";
+		// echo $sql;
+		$mydb->setQuery($sql);
+		$mydb->executeQuery(); 
+	}
+	redirect('/admin/mod_reservation/index.php?view=edit&code=' . $_GET['code'] .'');
+	message("Adde new Item!", "success");
+
+
+
+	// $sql = "INSERT into tblreservation (CONFIRMATIONCODE,ACCOMOID,RPRICE,GUESTID,TRANSDATE,ARRIVAL,DEPARTURE,PRORPOSE,STATUS,BOOKDATE,REMARKS,USERID,client_name,mnumber,address)
+	// values ('" . $_GET['code'] ."','" . $_GET['accomid'] ."','" . $_GET['price'] ."','" . $_GET['user'] ."','". date('Y-m-d h:i:s') ."','".$resItem->ARRIVAL."','".$resItem->DEPARTURE."','Travel','".$resItem->STATUS."','".date('Y-m-d h:i:s')."','additional','".$resItem->USERID."','".$resItem->client_name."','".$resItem->mnumber."','".$resItem->address."')";
+	// echo $sql;
+	// $mydb->setQuery($sql);
+	// $mydb->executeQuery(); 
 	
 
 		
-message("Adde new Item!", "success");
 }
 function deleteitem(){
 
@@ -138,7 +167,13 @@ function deleteitem(){
 	$sql = "DELETE FROM tblreservation WHERE RESERVEID='" . $_GET['RESERVEID'] ."'"; 
 	$mydb->setQuery($sql);
 	$mydb->executeQuery();
-	redirect('index.php?view=view&code=' . $_GET['code'] .'');
+	message("Item deleted!", "danger");
+	$reservation = new Reservation();
+	if (empty($reservation->listOfreservation())) {
+		redirect('index.php');
+	} else {
+		redirect('index.php?view=edit&code=' . $_GET['code'] .'');
+	}
 }
 
 function doConfirm(){
@@ -190,4 +225,78 @@ function doDelete(){
  	redirect('index.php');
 	}
   }
+
+function doAddItem() {
+	$confirmation_code = createRandomPassword();
+	$accomodation = new Accomodation();
+	$accomSelected = $accomodation->single_accomodation($_POST['accomodation']);
+	// var_dump($_POST, $confirmation_code, $accomSelected);die;
+	
+  $reservation = new Reservation();
+  $reservation->CONFIRMATIONCODE  = $confirmation_code;
+  $reservation->TRANSDATE         = date('Y-m-d h:i:s'); 
+  $reservation->ACCOMOID          = $_POST['accomodation'];
+  $reservation->ARRIVAL           = date_format(date_create( $_POST['date']), 'Y-m-d');  
+  $reservation->DEPARTURE         = date('Y-m-d',strtotime($_POST['date'] . ' +1 day')); 
+  $reservation->RPRICE            = $accomSelected->price;  
+  $reservation->GUESTID           = 0; 
+  $reservation->PRORPOSE          = 'Travel';
+  $reservation->STATUS            = 'Pending';
+  $reservation->client_name       = $_POST['first_name'] . ' ' . $_POST['last_name'];
+	$reservation->BOOKDATE					= date_format(date_create('now'), 'Y-m-d h:i:s');
+	$reservation->REMARKS						= '';
+	$reservation->USERID						= 0;
+	$reservation->mnumber						= intval($_POST['mobile_no']);
+	$reservation->address						= $_POST['address'];
+  $reservation->create();
+	redirect('/admin/mod_reservation/index.php');
+}
+
+function createRandomPassword() {
+
+	$chars = "abcdefghijkmnopqrstuvwxyz023456789";
+
+	srand((double)microtime()*1000000);
+
+	$i = 0;
+
+	$pass = '' ;
+	while ($i <= 7) {
+
+			$num = rand() % 33;
+
+			$tmp = substr($chars, $num, 1);
+
+			$pass = $pass . $tmp;
+
+			$i++;
+
+	}
+
+	return $pass;
+
+}
+
+function doAddPay() {
+	$res = new Reservation();
+	var_dump($_POST);
+	$insert = $res->insertPayment($_POST['code'], $_POST['pay']);
+
+	if ($insert) {
+		message("Payment success", 'success');
+	} else {
+		message("Payment failed.", 'danger');
+	}
+	redirect('/admin/mod_reservation/index.php');
+}
+
+function doMarkAsPaid() {
+	$reservation = new Reservation();
+	$res = $reservation->markAsPaid($_GET['code']);
+	if ($res) {
+		message('Mark as paid success.', 'success');
+	} else 
+		message('Mark as paid failed.', 'danger');
+	}
+	redirect('/admin/mod_reservation/index.php')
 ?>

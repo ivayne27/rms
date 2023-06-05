@@ -20,10 +20,10 @@ require_once("includes/initialize.php");
             </title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?php echo WEB_ROOT; ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="<?php echo WEB_ROOT; ?>css/signin.css" rel="stylesheet"> 
+    <link href="css/signin.css" rel="stylesheet"> 
 
     <style type="text/css">
       /*  #wrap {
@@ -118,7 +118,7 @@ require_once("includes/initialize.php");
                               <table>
                                 <tr>
                                   <td rowspan="3"> 
-                                    <img class="img"  src="<?php echo WEB_ROOT. $row['LOCATION']; ?>" alt="User Avatar">  
+                                    <img class="img"  src="<?php $row['LOCATION']; ?>" alt="User Avatar">  
                                   </td>
                                   <td>
                                     <div class="col-2">
@@ -188,9 +188,9 @@ require_once("includes/initialize.php");
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-  <script  src="<?php echo WEB_ROOT; ?>jquery/jquery.min.js"></script> 
+  <script  src="jquery/jquery.min.js"></script> 
   <!-- Bootstrap Core JavaScript -->
-  <script src="<?php echo WEB_ROOT; ?>js/bootstrap.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function(){

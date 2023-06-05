@@ -12,7 +12,7 @@
 	function confirm_logged_in() {
 		if (!logged_in()) {?>
 			<script type="text/javascript">
-				window.location = "admin/index.php";
+				window.location = "/admin/mod_room/index.php"; // old is admin/index.php
 			</script>
 
 		<?php

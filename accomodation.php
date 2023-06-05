@@ -16,7 +16,7 @@ if(isset($_POST['booknow'])){
      
       addtocart($_POST['ROOMID'],$days, $totalprice,$_SESSION['arrival'],$_SESSION['departure'],0);
 
-      redirect(WEB_ROOT. 'booking/'); 
+      redirect('booking/'); 
 
 }
  
@@ -74,7 +74,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
 
 <div id="bread">
    <ol class="breadcrumb">
-      <li><a href="<?php echo WEB_ROOT ;?>index.php">Home</a>
+      <li><a href="/index.php">Home</a>
       </li>
       <li class="active"><?php print $title  ; ?></li>
       <li  style="color: #02aace; float:right"> <?php print  $msg; ?></li>
@@ -222,7 +222,7 @@ $_SESSION['departure'] =date_format(date_create($_POST['departure']),"Y-m-d");
                     <a href="#" >
                         <figure class="gallery-item ">
                    
-                            <img class="img-responsive img-hover"  src="<?php echo WEB_ROOT .'admin/mod_room/'.$result->ROOMIMAGE; ?>">
+                            <img class="img-responsive img-hover"  src="<?php '/admin/mod_room/'.$result->ROOMIMAGE; ?>">
                     
                              <!-- <?php echo $img_title; ?> -->
                             <figcaption class="img-title-active">

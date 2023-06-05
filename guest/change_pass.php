@@ -17,7 +17,7 @@ $res = $guest->single_guest($_SESSION['GUESTID']);
       </h1> 
     </section>
 
-  <form class="form-horizontal" action="<?php echo WEB_ROOT; ?>guest/changepass.php" method="post" onsubmit="return personalInfo()" name="personal" >
+  <form class="form-horizontal" action="/guest/changepass.php" method="post" onsubmit="return personalInfo()" name="personal" >
     <!-- Main content -->
     <section class="content">
 

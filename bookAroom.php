@@ -16,7 +16,7 @@ if(isset($_POST['booknow'])){
      
       addtocart($_POST['ROOMID'],$days, $totalprice,$_SESSION['departure'],$_SESSION['departure'],0);
 
-      redirect(WEB_ROOT. 'booking/'); 
+      redirect('booking/'); 
 
 }
  
@@ -183,7 +183,7 @@ $_SESSION['addressNew'] = $_POST['address'];
                   <input type="hidden" name="ROOMID" value="<?php echo $result->ROOMID ;?>">
 
                       <div class="card">
-                        <img class="card-img-top"  src="<?php echo WEB_ROOT .'admin/mod_room/'.$result->ROOMIMAGE; ?>" alt="Room image description">
+                        <img class="card-img-top"  src="<?php '/admin/mod_room/'.$result->ROOMIMAGE; ?>" alt="Room image description">
                         <div class="card-body">
                           <div class="rooms_title"><h2><?php echo $result->ROOM ;?> <?php echo $result->ACCOMODATION ;?></h2></div>
                           <div class="rooms_text">
@@ -192,11 +192,11 @@ $_SESSION['addressNew'] = $_POST['address'];
                           <div class="rooms_list">
                             <ul>
                               <li class="d-flex flex-row align-items-center justify-content-start">
-                                <img src="images/check.png" alt="">
+                                <img src="/images/check.png" alt="">
                                 <span>Number of Person - <?php echo $result->NUMPERSON ;?></span>
                               </li> 
                               <li class="d-flex flex-row align-items-center justify-content-start">
-                                <img src="images/check.png" alt="">
+                                <img src="/images/check.png" alt="">
                                 <span>Remaining Rooms :<?php echo  $resNum ;?></span>
                               </li>
                             </ul>

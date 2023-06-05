@@ -2,7 +2,7 @@
 
 if (!isset($_SESSION['dragonhouse_cart'])) {
   # code...
-  redirect(WEB_ROOT.'index.php');
+  redirect('/index.php');
 }
 
 
@@ -12,7 +12,7 @@ if (!isset($_SESSION['dragonhouse_cart'])) {
            <h1 style="display: inline-block;">Login</h1>
               <a style="display: inline-block;" href="personalinfo.php" data-title="Register New Guest" data-toggle="lightbox">  Register</a> 
        
-                      <form action="<?php echo  WEB_ROOT."login.php" ?>" method="post">
+                      <form action="<?php echo  "/login.php" ?>" method="post">
                         <div class="form-group">
                             <div class=""> 
                               <label class="control-label" for=

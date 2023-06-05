@@ -10,7 +10,7 @@ session_start();
 $_SESSION['address'] = $_POST['address'];
 ?>
 <script type="text/javascript">
-	window.location = '<?php echo WEB_ROOT; ?>index.php';
+	window.location = '/index.php';
 	
 </script>
 
@@ -19,7 +19,7 @@ $_SESSION['address'] = $_POST['address'];
 if(isset($_POST['savephoto'])){
 	if (!isset($_FILES['image']['tmp_name'])) {
 			message("No Image Selected!", "error");
-			 redirect(WEB_ROOT."index.php");
+			 redirect("/index.php");
 		}else{
 			$file=$_FILES['image']['tmp_name'];
 			$image= addslashes(file_get_contents($_FILES['image']['tmp_name']));
@@ -28,7 +28,7 @@ if(isset($_POST['savephoto'])){
 			
 			if ($image_size==FALSE) {
 				message("That's not an image!");
-				redirect(WEB_ROOT."index.php");
+				redirect("/index.php");
 		   }else{
 			
 		
@@ -43,7 +43,7 @@ if(isset($_POST['savephoto'])){
 					
 				 	// message("Room Image Upadated successfully!", "success");
 				 	// unset($_SESSION['id']);
-				 	 redirect(WEB_ROOT."index.php");
+				 	 redirect("/index.php");
  			}
  		}
 

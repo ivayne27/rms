@@ -8,10 +8,10 @@ while($row = mysql_fetch_array($result))
 extract($row);
   {
          if ($roomImage) {
-			$image = WEB_ROOT . 'admin/room/' . $roomImage;
+			$image = '/admin/room/' . $roomImage;
                 }
                         else {
-			$image = WEB_ROOT . 'admin/room/no-image-small.png';
+			$image = '/admin/room/no-image-small.png';
 		}
   echo "<img width=300 height=300 alt='Unable to View' src='" .$image."'>";
   }

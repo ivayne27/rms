@@ -11,23 +11,23 @@ require_once("../includes/initialize.php");
 <title><?php echo isset($title) ? $title . ' | Nixies Mountain Resort' :  'Nixies Mountain Resort' ; ?></title>
  
     
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>style.css">  
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>css/responsive.css">    
+<link rel="stylesheet" type="text/css" href="/style.css">  
+<link rel="stylesheet" type="text/css" href="/css/responsive.css">    
 
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>css/bootstrap.css">  
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">  
 
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>fonts/css/font-awesome.min.css"> 
+<link rel="stylesheet" type="text/css" href="/fonts/css/font-awesome.min.css"> 
 
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>css/custom-navbar.min.css"> 
+<link rel="stylesheet" type="text/css" href="/css/custom-navbar.min.css"> 
 
 <!-- DataTables CSS -->
-<!-- <link href="<?php echo WEB_ROOT; ?>css/dataTables.bootstrap.css" rel="stylesheet"> -->
+<!-- <link href="css/dataTables.bootstrap.css" rel="stylesheet"> -->
  
- <link href="<?php echo WEB_ROOT; ?>css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
- <link href="<?php echo WEB_ROOT; ?>css/datepicker.css" rel="stylesheet" media="screen">
+ <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+ <link href="/css/datepicker.css" rel="stylesheet" media="screen">
 
- <link href="<?php echo WEB_ROOT; ?>css/galery.css" rel="stylesheet" media="screen">
- <link href="<?php echo WEB_ROOT; ?>css/ekko-lightbox.css" rel="stylesheet">
+ <link href="/css/galery.css" rel="stylesheet" media="screen">
+ <link href="/css/ekko-lightbox.css" rel="stylesheet">
 </head>
 <body onload="window.print();">
 <div class="wrapper">
@@ -35,13 +35,13 @@ require_once("../includes/initialize.php");
   <?php 
 
   require_once("../includes/initialize.php");
- $query ="SELECT g.`GUESTID`, `G_FNAME`, `G_LNAME`, `G_ADDRESS`,`CONFIRMATIONCODE`, `TRANSDATE`, `ARRIVAL`, `DEPARTURE`, `RPRICE`,`client_name` FROM `tblguest` g ,`tblreservation` r WHERE g.`GUESTID`=r.`GUESTID` and `CONFIRMATIONCODE` ='".$_POST['code']."'";
-  $mydb->setQuery($query);
- $res = $mydb->loadsingleResult();
+//  $query ="SELECT g.`GUESTID`, `G_FNAME`, `G_LNAME`, `G_ADDRESS`,`CONFIRMATIONCODE`, `TRANSDATE`, `ARRIVAL`, `DEPARTURE`, `RPRICE`,`client_name` FROM `tblguest` g ,`tblreservation` r WHERE g.`GUESTID`=r.`GUESTID` and `CONFIRMATIONCODE` ='".$_POST['code']."'";
+//   $mydb->setQuery($query);
+//  $res = $mydb->loadsingleResult();
 
 
      ?>
-    <form action="<?php echo WEB_ROOT;; ?>guest/readprint.php?>" method="POST" target="_blank">
+    <form action="/guest/readprint.php?>" method="POST" target="_blank">
     <!-- Main content -->
     <section class="invoice">
       <!-- title row -->
@@ -187,7 +187,7 @@ require_once("../includes/initialize.php");
       <!-- this row will not appear when printing -->
       <div class="row no-print">
         <div class="col-xs-12">
-          <!-- <a href="<?php echo WEB_ROOT; ?>guest/readprint.php?>" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a> -->
+          <!-- <a href="guest/readprint.php?>" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a> -->
           <!-- <button type="submit"  ><i class="fa fa-print"></i> Print</button> -->
   <!--         <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
           </button>

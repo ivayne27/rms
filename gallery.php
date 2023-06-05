@@ -25,7 +25,7 @@
 
 <div id="bread">
    <ol class="breadcrumb">
-      <li><a href="<?php echo WEB_ROOT ;?>index.php">Home</a>
+      <li><a href="/index.php">Home</a>
       </li>
       <li class="active"><?php print $title  ; ?></li>
   </ol> 
@@ -36,32 +36,32 @@
         	<div class="row">
 				<div class="col-lg-4">
 					<div id="background">
-						<img class="stretch" src="<?php echo WEB_ROOT; ?>images/SlideShow/images.jpg">
+						<img class="stretch" src="/images/SlideShow/images.jpg">
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div id="background">
-						<img class="stretch img-hover" src="<?php echo WEB_ROOT; ?>images/SlideShow/header-bg1.jpg">
+						<img class="stretch img-hover" src="/images/SlideShow/header-bg1.jpg">
 					</div>
 				</div> 
 				<div class="col-lg-4">
 					<div id="background">
-						<img class="stretch img-hover" src="<?php echo WEB_ROOT; ?>images/SlideShow/images.jpg">
+						<img class="stretch img-hover" src="/images/SlideShow/images.jpg">
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div id="background">
-						<img class="stretch img-hover" src="<?php echo WEB_ROOT; ?>images/SlideShow/header-bg1.jpg">
+						<img class="stretch img-hover" src="/images/SlideShow/header-bg1.jpg">
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div id="background">
-						<img class="stretch img-hover" src="<?php echo WEB_ROOT; ?>images/SlideShow/images.jpg">
+						<img class="stretch img-hover" src="/images/SlideShow/images.jpg">
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div id="background">
-						<img class="stretch img-hover" src="<?php echo WEB_ROOT; ?>images/SlideShow/header-bg1.jpg">
+						<img class="stretch img-hover" src="/images/SlideShow/header-bg1.jpg">
 					</div>
 				</div>
 			</div>		

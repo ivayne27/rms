@@ -3,7 +3,7 @@
       <div class="sm-ul navbar-custom-menu ">
           <ul class=" navbar-nav  tooltip-demo d-flex flex-row align-items-center justify-content-start pull-right">
             <li>
-              <a  data-toggle="tooltip" data-placement="bottom"   title="Booking Cart"  href="<?php echo WEB_ROOT.'booking/index.php';  ?>" class="mx-1"> 
+              <a  data-toggle="tooltip" data-placement="bottom"   title="Booking Cart"  href="<?php '/booking/index.php';  ?>" class="mx-1"> 
                <i class="fa fa-shopping-cart fa-fw"></i> <span class="px-1"><?php echo  isset($cart) ? $cart : '' ; ?></span>
              </a>
             </li>
@@ -32,7 +32,7 @@
               <li> 
                 <ul class="">
                   <li> 
-                    <a  class="read" href="<?php echo WEB_ROOT ;  ?>guest/readmessage.php?code=<?php echo  $row['CONFIRMATIONCODE']; ?>" data-toggle="lightbox"   data-id="<?php echo  $row['CONFIRMATIONCODE']; ?> " >
+                    <a  class="read" href="guest/readmessage.php?code=<?php echo  $row['CONFIRMATIONCODE']; ?>" data-toggle="lightbox"   data-id="<?php echo  $row['CONFIRMATIONCODE']; ?> " >
                       <div class="pull-left">
                         <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                       </div>
@@ -61,17 +61,17 @@ $result = $g->single_guest($_SESSION['GUESTID']);
             <ul class="dropdown-menu nav nav-stacked">    
             <li class="widget-user-header bg-yellow">
               <div class="widget-user-image">
-                <img class="img-circle" style="cursor:pointer;width:200px;height:100px;padding:0;"  data-target="#myModal" data-toggle="modal" src="<?php echo WEB_ROOT. $result->LOCATION;  ?>" alt="User Avatar">
+                <img class="img-circle" style="cursor:pointer;width:200px;height:100px;padding:0;"  data-target="#myModal" data-toggle="modal" src="<?php echo '/' . $result->LOCATION;  ?>" alt="User Avatar">
               </div> 
               <h3 class="widget-user-username"><?php echo $_SESSION['name']. ' ' . $_SESSION['last']; ?> </h3> 
             </li> 
                 <li><a style="color:#000;text-align:left;border-bottom:1px solid #fff;"
-                    href="<?php echo WEB_ROOT ;  ?>guest/profile.php" data-toggle="lightbox" >Client Details </a></li> 
+                    href="/guest/profile.php" data-toggle="lightbox" >Client Details </a></li> 
                     <li><a style="color:#000;text-align:left;border-bottom:1px solid #fff;"
-                    href="<?php echo WEB_ROOT ;  ?>guest/change_pass.php" data-toggle="lightbox" >Change Pass </a></li> 
+                    href="/guest/change_pass.php" data-toggle="lightbox" >Change Pass </a></li> 
                 <li><a style="color:#000;text-align:left;border-bottom:1px solid #fff;" 
-                href="<?php echo WEB_ROOT ;  ?>guest/bookinglist.php" data-toggle="lightbox">Bookings </a></li>
-                <li><a style="color:#000;text-align:left;border-bottom:1px solid #fff;" href="<?php echo WEB_ROOT.'logout.php';  ?>">Logout </a></li> 
+                href="/guest/bookinglist.php" data-toggle="lightbox">Bookings </a></li>
+                <li><a style="color:#000;text-align:left;border-bottom:1px solid #fff;" href="<?php echo '/logout.php';  ?>">Logout </a></li> 
             </ul>
 
           </li>

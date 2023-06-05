@@ -45,10 +45,13 @@ switch ($view) {
     break;
   default :
       $title="Home";  
-    $content ='home.php';   
+    $content ='home.php'; 
+		redirect("/admin/login.php");
+		break;  
 }
 
 require_once ('theme/template.php');
 
+// redirect('/admin/mod_room/index.php'); 
 ?>
  

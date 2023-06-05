@@ -7,21 +7,21 @@
    
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
- <link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>style.css">  
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>css/responsive.css">    
+ <link rel="stylesheet" type="text/css" href="style.css">  
+<link rel="stylesheet" type="text/css" href="css/responsive.css">    
 
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>css/bootstrap.css">  
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css">  
 
-<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>fonts/css/font-awesome.min.css"> 
+<link rel="stylesheet" type="text/css" href="fonts/css/font-awesome.min.css"> 
 
 
 <!-- DataTables CSS -->
-<!-- <link href="<?php echo WEB_ROOT; ?>css/dataTables.bootstrap.css" rel="stylesheet"> -->
+<!-- <link href="css/dataTables.bootstrap.css" rel="stylesheet"> -->
  
- <link href="<?php echo WEB_ROOT; ?>css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
- <link href="<?php echo WEB_ROOT; ?>css/datepicker.css" rel="stylesheet" media="screen">
+ <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+ <link href="css/datepicker.css" rel="stylesheet" media="screen">
 
- <link href="<?php echo WEB_ROOT; ?>css/galery.css" rel="stylesheet" media="screen">
+ <link href="css/galery.css" rel="stylesheet" media="screen">
 </head>
 <body onload="window.print();">
 
@@ -30,7 +30,7 @@
 
 if (!isset($_SESSION['dragonhouse_cart'])) {
   # code...
-  redirect(WEB_ROOT.'index.php');
+  redirect('/index.php');
 }
 
 

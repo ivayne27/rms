@@ -23,7 +23,7 @@ switch ($action) {
 	}
 function doInsert(){
 	 
-			
+			var_dump($_POST);
 			if ($_POST['ROOM'] == "" OR $_POST['ROOMNUM'] == "" OR $_POST['PRICE'] == "") {
 			 
 					message("All fields required!", "error");

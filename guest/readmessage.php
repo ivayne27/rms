@@ -3,19 +3,30 @@
 
 
  
-$sql = "UPDATE `tblpayment` SET `MSGVIEW`=1 WHERE `CONFIRMATIONCODE` ='" . $_GET['code'] ."'";
- $mydb->setQuery($sql);
- $mydb->executeQuery(); 
+// $sql = "UPDATE `tblpayment` SET `MSGVIEW`=1 WHERE `CONFIRMATIONCODE` ='" . $_GET['code'] ."'";
+//  $mydb->setQuery($sql);
+//  $mydb->executeQuery(); 
 
 
+ 			
+      // $query ="SELECT g.`GUESTID`, `G_FNAME`, `G_LNAME`, `G_ADDRESS`,`CONFIRMATIONCODE`, `TRANSDATE`, `ARRIVAL`, `DEPARTURE`, `RPRICE`,`client_name`
+      //          FROM `tblguest` g ,`tblreservation` r 
+      //          WHERE g.`GUESTID`=r.`GUESTID` and `CONFIRMATIONCODE` ='".$_GET['code']."'";
+      // $mydb->setQuery($query);
+      // $result = $mydb->loadsingleResult(); 
 
-      $query ="SELECT g.`GUESTID`, `G_FNAME`, `G_LNAME`, `G_ADDRESS`,`CONFIRMATIONCODE`, `TRANSDATE`, `ARRIVAL`, `DEPARTURE`, `RPRICE`,`client_name`
-               FROM `tblguest` g ,`tblreservation` r 
-               WHERE g.`GUESTID`=r.`GUESTID` and `CONFIRMATIONCODE` ='".$_GET['code']."'";
-      $mydb->setQuery($query);
-      $result = $mydb->loadsingleResult(); 
+			$reserve = new Reservation();
+			// $res = $reserve->reservationsByCode($_GET['code']);
+			$res = $reserve->singleByCode($_GET['code']);
+			$client_name = $res->client_name;
+			$address = $res->address;
+			$trans_date = date('Y-m-d H:i:s', strtotime('now'));
+ 			$adds = $reserve->additional_reservations($_GET['code']);
+			 $days =  dateDiff(date($res->ARRIVAL),date($res->DEPARTURE));
+			$pays = $reserve->getPayments($_GET['code']);
+			$total_pays = array_sum(array_column($pays, 'payment'));
      ?>
-    <form action="<?php echo WEB_ROOT;; ?>guest/readprint.php?" method="POST" target="_blank">
+    <form action="/guest/readprint.php?" method="POST" target="_blank">
     <!-- Main content -->
     <section class="invoice">
       <!-- title row -->
@@ -42,9 +53,9 @@ $sql = "UPDATE `tblpayment` SET `MSGVIEW`=1 WHERE `CONFIRMATIONCODE` ='" . $_GET
         <div class="col-sm-4 invoice-col">
           To
           <address>
-            <strong><?php echo $result->client_name; ?>
+            <strong><?php echo $client_name; ?>
             </strong><br>
-            <?php echo $result->G_ADDRESS; ?> 
+            <?php echo $address; ?> 
           </address>
         </div>
         <!-- /.col -->
@@ -53,12 +64,13 @@ $sql = "UPDATE `tblpayment` SET `MSGVIEW`=1 WHERE `CONFIRMATIONCODE` ='" . $_GET
         <br/>
           <!-- <b>Invoice #007612</b><br>
           <br> -->
-          <b>Confirmation ID: </b> <p style="background-color:blue;color:white"> <?php echo $result->CONFIRMATIONCODE; ?></p> 
-          <input type="hidden" name="code" value="<?php echo $result->CONFIRMATIONCODE; ?>">
-<br>
-          <b>Transaction Date:</b> <?php echo  Date($result->TRANSDATE); ?>
-<br>
-          <b>Account:</b> <?php echo $result->GUESTID; ?>
+          <b>Confirmation ID: </b> <br >
+						<span style="background-color:blue;color:white"> <?php echo $_GET['code'] ?> </span>
+          <input type="hidden" name="code" value="<?php echo $_GET['code']; ?>">
+<br> <br>
+          <b>Transaction Date:</b> <br> <?php echo  $trans_date ?>
+<br> <br>
+          <!-- <b>Account:</b> <?php echo $result->GUESTID; ?> -->
 
         </div>
         <!-- /.col -->
@@ -66,11 +78,11 @@ $sql = "UPDATE `tblpayment` SET `MSGVIEW`=1 WHERE `CONFIRMATIONCODE` ='" . $_GET
       <!-- /.row -->
   <?php 
  
- $query ="SELECT * 
-          FROM `tblaccomodation` A,`tblroom`  RM, `tblreservation` RS  
-          WHERE  A.`ACCOMID`=RM.`ACCOMID` AND RM.`ROOMID`=RS.`ROOMID` AND RS.`STATUS`<>'Cancelled' and `CONFIRMATIONCODE` ='".$_GET['code']."'";
-  $mydb->setQuery($query);
- $res = $mydb->loadResultList(); 
+//  $query ="SELECT * 
+//           FROM `tblaccomodation` A,`tblroom`  RM, `tblreservation` RS  
+//           WHERE  A.`ACCOMID`=RM.`ACCOMID` AND RM.`ROOMID`=RS.`ROOMID` AND RS.`STATUS`<>'Cancelled' and `CONFIRMATIONCODE` ='".$_GET['code']."'";
+//   $mydb->setQuery($query);
+//  $res = $mydb->loadResultList(); 
 
 
      ?>
@@ -80,33 +92,48 @@ $sql = "UPDATE `tblpayment` SET `MSGVIEW`=1 WHERE `CONFIRMATIONCODE` ='" . $_GET
           <table class="table table-striped">
             <thead>
             <tr>
-              <th>Item</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Arrival</th>
-              <th>Departure</th>
-              <th>Day(s)</th>
-              <th>Subtotal</th>
+              <th width="100">Item</th>
+              <th width="150">Description</th>
+              <th width="80">Price</th>
+              <th width="100">Arrival</th>
+              <th width="100">Departure</th>
+              <th width="10">Day(s)</th>
+							<th width="10">Qty</th>
+              <th width="100">Subtotal</th>
             </tr>
             </thead>
             <tbody>
-            <?php   foreach ($res as $result) {
-          $days =  dateDiff(date($result->ARRIVAL),date($result->DEPARTURE));
+						<tr> 
+              <td style="text-align: center;"><?php echo $res->ACCOMODATION ;?></td>
+              <td style="text-align: center;"><?php echo $res->ACCOMDESC ?></td>
+              <td style="text-align: center;"> ₱<?php echo number_format($res->RPRICE, 2, '.', ',') ;?></td>
+              <td style="text-align: center;"><?php echo date_format(date_create($res->ARRIVAL),'m/d/Y');?></td>
+              <td style="text-align: center;"><?php echo date_format(date_create($res->DEPARTURE),'m/d/Y');?></td>
+              <td style="text-align: center;"><?php echo ($days==0) ? '1' : $days;?></td>
+							<td style="text-align: center;"> <?php echo $res->accom_qty;?></td>
+              <td style="text-align: center;"> ₱<?php  echo number_format($res->RPRICE * $res->accom_qty, 2, '.', ',') ;?></td>
+            </tr>
+            <?php  
+							$total_price = $res->RPRICE;
+						foreach ($adds as $add) {
+							
              ?>
 
             <tr> 
-              <td><?php echo $result->ACCOMODATION . ' [' .$result->ROOM.']' ;?></td>
-              <td><?php echo $result->ROOMDESC . ' <br/> Person: ' .  $result->NUMPERSON;?></td>
-              <td> ₱<?php echo $result->PRICE;?></td>
-              <td><?php echo date_format(date_create($result->ARRIVAL),'m/d/Y');?></td>
-              <td><?php echo date_format(date_create($result->DEPARTURE),'m/d/Y');?></td>
-              <td><?php echo ($days==0) ? '1' : $days;?></td>
-              <td> ₱<?php echo $result->RPRICE;?></td>
+              <td style="text-align: center;"><?php echo $add->ACCOMODATION ;?></td>
+              <td style="text-align: center;"><?php echo $add->ACCOMDESC ?></td>
+              <td style="text-align: center;"> ₱<?php echo number_format($add->price, 2, '.', ',') ;?></td>
+              <td style="text-align: center;"><?php echo date_format(date_create($res->ARRIVAL),'m/d/Y');?></td>
+              <td style="text-align: center;"><?php echo date_format(date_create($res->DEPARTURE),'m/d/Y');?></td>
+              <td style="text-align: center;"><?php echo ($days==0) ? '1' : $days;?></td>
+              <td style="text-align: center;"> <?php echo $add->qty;?></td>
+              <td style="text-align: center;"> ₱<?php echo number_format($add->price * $add->qty, 2, '.', ',') ;?></td>
             </tr>
             
             
             <?php 
-             @$tot += $result->RPRICE;
+             @$tot += $add->RPRICE;
+						 $total_price += $add->price * $add->qty;
             } ?>
             </tbody>
           </table>
@@ -136,9 +163,19 @@ $sql = "UPDATE `tblpayment` SET `MSGVIEW`=1 WHERE `CONFIRMATIONCODE` ='" . $_GET
           <div class="table-responsive">
             <table class="table">
               <tr>
-                <th style="width:50%">Total:</th>
-                <td>₱<?php echo @$tot ; ?></td>
+                <th style=" text-align:left;">Total:</th>
+                <!-- <td>₱<?php echo @$tot ; ?></td> -->
+                <td>₱<?php echo number_format($total_price, 2, '.', ',') ; ?></td>
+								
               </tr>
+							<tr>
+								<th style="text-align:left;" >Received:</th>
+								<td>₱ <?php echo number_format($total_pays, 2, '.', ','); ?></td>
+							</tr>
+							<tr>
+								<th style="text-align:left;" >Balance:</th>
+								<td>₱ <?php echo number_format($total_pays - $total_price, 2, '.', ','); ?></td>
+							</tr>
          <!--      <tr>
                 <th>Tax (9.3%)</th>
                 <td>$10.34</td>
@@ -161,8 +198,8 @@ $sql = "UPDATE `tblpayment` SET `MSGVIEW`=1 WHERE `CONFIRMATIONCODE` ='" . $_GET
       <!-- this row will not appear when printing -->
       <div class="row no-print">
         <div class="col-xs-12">
-          <!-- <a href="<?php echo WEB_ROOT; ?>guest/readprint.php?>" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a> -->
-          <button type="submit"  ><i class="fa fa-print"></i> Print</button>
+          <!-- <a href="guest/readprint.php?>" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a> -->
+          <button type="button" onclick="window.print()"  ><i class="fa fa-print"></i> Print</button>
   <!--         <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
           </button>
           <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">

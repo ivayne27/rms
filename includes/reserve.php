@@ -7,15 +7,19 @@
 */
 require_once(LIB_PATH.DS.'database.php');
 class Reservation{
-	
+	public $id;
 	protected static $tbl_name = "tblreservation";
 	function db_fields(){
 		global $mydb;
 		return $mydb->getFieldsOnOneTable(self::$tbl_name);
 	}
-	function listOfreservation(){
+	function listOfreservation($withAdds=false){
 		global $mydb;
-		$mydb->setQuery("Select * from ".self::$tbl_name);
+		if (!$withAdds) {
+			$mydb->setQuery("Select * from ".self::$tbl_name);
+		} else {
+			$mydb->setQuery("Select * from ".self::$tbl_name . " LEFT JOIN `tblaccomodation` ON `tblaccomodation`.`ACCOMID` = `tblreservation`.`ACCOMOID` WHERE `REMARKS` = ''");
+		}
 		$cur = $mydb->loadResultList();
 		return $cur;
 	
@@ -25,6 +29,76 @@ class Reservation{
 			$mydb->setQuery("SELECT * FROM ".self::$tbl_name." Where `RESERVEID`= {$id} LIMIT 1");
 			$cur = $mydb->loadSingleResult();
 			return $cur;
+	}
+	function singleByCode( $code ) {
+		global $mydb;
+		$mydb->setQuery("SELECT * FROM ".self::$tbl_name." LEFT JOIN `tblaccomodation` ON `tblaccomodation`.`ACCOMID` = `tblreservation`.`ACCOMOID` WHERE `REMARKS` = '' AND `CONFIRMATIONCODE`= '".$code."' LIMIT 1");
+		$cur = $mydb->loadSingleResult();
+		return $cur;
+	}
+
+	function additional_reservations($code) {
+		global $mydb;
+		// $mydb->setQuery("SELECT * FROM ".self::$tbl_name." Where `CONFIRMATIONCODE`= '".$code."' AND `REMARKS` = 'additional'");
+		$mydb->setQuery("SELECT DISTINCT `ACCOMOID`, SUM(`accom_qty`) as `qty`, (SUM(`accom_qty`) * `tblaccomodation`.`price`) as `total_price`, `tblaccomodation`.`ACCOMODATION`, `tblaccomodation`.`ACCOMDESC`, `tblaccomodation`.`max_person_included`, `tblaccomodation`.`price` from `tblreservation` LEFT JOIN `tblaccomodation` ON `tblaccomodation`.`ACCOMID` = `tblreservation`.`ACCOMOID` WHERE `tblreservation`.`CONFIRMATIONCODE` = '".$code."' AND `tblreservation`.`REMARKS` = 'additional' GROUP BY `ACCOMOID`");
+		$cur = $mydb->loadResultList();
+		return $cur;
+	}
+
+	function reservationsByCode( $code ) {
+		global $mydb;
+		$mydb->setQuery("Select * from " . self::$tbl_name . " WHERE `CONFIRMATIONCODE` = '".$code."'");
+		$cur = $mydb->loadResultList();
+		return $cur;
+	}
+	function getStatusByCode ( $code ) {
+		global $mydb;
+		$mydb->setQuery("Select STATUS from " . self::$tbl_name . " WHERE `CONFIRMATIONCODE` = '".$code."' LIMIT 1");
+		$cur = $mydb->loadSingleResult();
+		return $cur;
+	}
+
+	function getPayments ($code) {
+		global $mydb;
+		$mydb->setQuery("Select * from tblpay WHERE `confirmation_code` = '".$code."'");
+		$cur = $mydb->loadResultList();
+		return $cur;
+	}
+
+	function insertPayment ($code, $payment) {
+		global $mydb;
+		$mydb->setQuery("INSERT INTO `tblpay` (`confirmation_code`, `payment`) VALUES ('".$code."','".$payment."')" );
+		try {
+			// var_dump($sql, $mydb->insert_id());
+			if($mydb->executeQuery()) {
+				$this->id = $mydb->insert_id();
+				return true;
+			} else {
+				return false;
+			}
+		} catch (\Exception $e) {
+			var_dump($e->getMessage());
+		}
+	}
+
+	function searchReports($text_search, $status, $start_date, $end_date) {
+		global $mydb;
+		$mydb->setQuery("Select * from tblreservation LEFT JOIN `tblaccomodation` ON `tblaccomodation`.`ACCOMID` = `tblreservation`.`ACCOMOID` WHERE `REMARKS` = '' AND DATE(`ARRIVAL`) >=  '".$start_date."' AND DATE(`DEPARTURE`) <=  '".$end_date."' AND STATUS='" .$status."' AND CONCAT( `tblaccomodation`.`ACCOMODATION`, ' ', `tblaccomodation`.`ACCOMDESC`) LIKE '%" .$text_search ."%'");
+		$reserves = $mydb->loadResultList();
+		foreach ($reserves as $res) {
+			$reservation = new Reservation();
+			$res->adds = $reservation->additional_reservations($res->CONFIRMATIONCODE);
+		}
+		
+		return $reserves;
+	}
+
+	function markAsPaid($code) {
+		global $mydb;
+		$sql = "UPDATE `tblreservation` SET `paid` = 1 WHERE `CONFIRMATIONCODE` = '".$code."' AND `REMARKS` = ''";
+		$mydb->setQuery($sql);
+		if(!$mydb->executeQuery()) return false; 	
+		return true;
 	}
  	 
 
@@ -91,14 +165,21 @@ class Reservation{
 		$sql .= ") VALUES ('";
 		$sql .= join("', '", array_values($attributes));
 		$sql .= "')";
-	echo $mydb->setQuery($sql);
-	
-	 if($mydb->executeQuery()) {
+	  $mydb->setQuery($sql);
+	try {
+		// var_dump($sql, $mydb->insert_id());
+		if($mydb->executeQuery()) {
 	    $this->id = $mydb->insert_id();
 	    return true;
 	  } else {
 	    return false;
+			
 	  }
+	} catch (\Exception $e) {
+		var_dump($e->getMessage());
+	}
+	 
+
 	}
 
 	public function update_resevation($code='') {

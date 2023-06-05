@@ -11,5 +11,5 @@ require_once("../includes/initialize.php");
 $content='home.php';
 
 include 'themes/backendTemplate.php';
-
+redirect('/admin/mod_room/index.php');
 ?>

@@ -25,6 +25,6 @@ unset($_SESSION['dragonhouse_cart']);
 //Destroy the session
 //session_destroy();
 
-redirect(WEB_ROOT ."index.php?logout=1");
+redirect("/index.php?logout=1");
 ?>
 

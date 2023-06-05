@@ -20,13 +20,13 @@
       <div class="col-sm-2 invoice-col">
         
       </div>
-        <div class="col-sm-2 invoice-col">
-          Cottage
+        <!-- <div class="col-sm-2 invoice-col">
+          Service
           <address>
             <input class="form-control" size="20" type="text" value="<?php echo isset($_POST['txtsearch']) ? $_POST['txtsearch'] :'' ?>" Placeholder="Search For...." name="txtsearch" id="txtsearch">
         </address>    
       
-        </div>
+        </div> -->
         <div class="col-sm-2 invoice-col">
           Status
           <address>
@@ -44,7 +44,7 @@
 
         <!-- /.col -->
         <div class="col-sm-2 invoice-col">
-          Checkedin
+          From
           <address> 
 		  <div class="form-group">
 			 <input class="form-control date start " size="20" type="text" value="<?php echo (isset($_POST['start'])) ? $_POST['start'] : date('Y-m-d'); ?>" Placeholder="Check In" name="start" id="from" data-date="" data-date-format="yyyy-mm-dd" data-link-field="any" data-link-format="yyyy-mm-dd">
@@ -53,7 +53,7 @@
         </div>
         <!-- /.col -->
         <div class="col-sm-2 invoice-col">
-        Checkedout
+        To
         <address>
         <div class="form-group"> 
 		      <input class="form-control date end " size="20" type="text" value="<?php echo (isset($_POST['end'])) ? $_POST['end'] : date('Y-m-d'); ?>"  name="end" id="end" data-date="" data-date-format="yyyy-mm-dd" data-link-field="any" data-link-format="yyyy-mm-dd">
@@ -96,11 +96,12 @@
             <thead>
             <tr>
               <th>Guest</th>
-              <th>Cottage</th>
+              <th>Services</th>
               <th>Price</th>
+							<th>Qty</th>
               <th>Arrival</th>
               <th>Departure</th>
-              <th>Night(s)</th>
+              <th>Day(s)</th>
               <th>Subtotal</th>
             </tr>
             </thead>
@@ -109,37 +110,75 @@
 	if(isset($_POST['submit'])){ 
 
   
-	$sql ="SELECT * 
-		 FROM  `tblaccomodation` A,  `tblroom` RM,  `tblreservation` RS,  `tblpayment` P,  `tblguest` G
-		 WHERE A.`ACCOMID` = RM.`ACCOMID` 
-		 AND RM.`ROOMID` = RS.`ROOMID` 
-		 AND RS.`CONFIRMATIONCODE` = P.`CONFIRMATIONCODE` 
-     AND P.`GUESTID` = G.`GUESTID`  
-     AND DATE(`ARRIVAL`) >=  '".$_POST['start']."'
-		 AND DATE(`DEPARTURE`) <=  '".$_POST['end']."' AND P.STATUS='" .$_POST['categ']."'
-     AND CONCAT( `ACCOMODATION`, ' ', `ROOM` , ' ' , `ROOMDESC`) LIKE '%" .$_POST['txtsearch'] ."%'";
+	// $sql ="SELECT * 
+	// 	 FROM  `tblaccomodation` A,  `tblroom` RM,  `tblreservation` RS,  `tblpayment` P,  `tblguest` G
+	// 	 WHERE A.`ACCOMID` = RM.`ACCOMID` 
+	// 	 AND RM.`ROOMID` = RS.`ROOMID` 
+	// 	 AND RS.`CONFIRMATIONCODE` = P.`CONFIRMATIONCODE` 
+  //    AND P.`GUESTID` = G.`GUESTID`  
+  //    AND DATE(`ARRIVAL`) >=  '".$_POST['start']."'
+	// 	 AND DATE(`DEPARTURE`) <=  '".$_POST['end']."' AND P.STATUS='" .$_POST['categ']."'
+  //    AND CONCAT( `ACCOMODATION`, ' ', `ROOM` , ' ' , `ROOMDESC`) LIKE '%" .$_POST['txtsearch'] ."%'";
+	$reservation = new Reservation();
+	$reserves = $reservation->searchReports('', $_POST['categ'], $_POST['start'], $_POST['end']);
+	// var_dump($reserves);
 	
 
-  $mydb->setQuery($sql);
-	$res = $mydb->executeQuery();
-	$row_count = $mydb->num_rows($res);
-	$cur = $mydb->loadResultList();
+  // $mydb->setQuery($sql);
+	// $res = $mydb->executeQuery();
+	// $row_count = $mydb->num_rows($res);
+	// $cur = $mydb->loadResultList();
 
-
-		if ($row_count >0){
-      			foreach ($cur as $result) {
-                $days =  dateDiff(date($result->ARRIVAL),date($result->DEPARTURE));
+		$total = 0;
+		if ($reserves >0){
+      			foreach ($reserves as $res) {
+                $days =  dateDiff(date($res->ARRIVAL),date($res->DEPARTURE));
+								$total = $res->RPRICE;
                    ?>
+									 <!-- Main Reserve -->
                   <tr> 
-                    <td><?php echo $result->client_name;?></td>
-                    <td><?php echo $result->ACCOMODATION . ' [' .$result->ROOM.']' ;?></td>
-                    <td> ₱ <?php echo $result->PRICE;?></td>
-                    <td><?php echo date_format(date_create($result->ARRIVAL),'m/d/Y');?></td>
-                    <td><?php echo date_format(date_create($result->DEPARTURE),'m/d/Y');?></td>
+                    <td><?php echo $res->client_name;?></td>
+                    <td>
+											<?php echo $res->ACCOMODATION ;?>
+											<br>
+											<?php 
+												foreach($res->adds as $add) { 
+													echo '- ' . $add->ACCOMODATION . '<br>';
+												}
+											?>
+										</td>
+                    <td> ₱ <?php echo number_format($res->RPRICE, 2, '.', ',');?>
+											<br>
+											<?php 
+												foreach($res->adds as $add) { 
+													echo '₱ ' . number_format($add->price, 2, '.', ',') . '<br>';
+												}
+											?>
+										</td>
+                    <td><?php echo $res->accom_qty;?>
+											<br>
+											<?php 
+												foreach($res->adds as $add) { 
+													echo $add->qty . '<br>';
+												}
+											?>
+										</td>
+                    <td><?php echo date_format(date_create($res->ARRIVAL),'m/d/Y');?></td>
+                    <td><?php echo date_format(date_create($res->DEPARTURE),'m/d/Y');?></td>
                     <td><?php echo ($days==0) ? '1' : $days;?></td>
-                    <td> ₱ <?php echo $result->RPRICE;?></td>
+                    <td> ₱ <?php echo number_format($res->RPRICE * $res->accom_qty, 2, '.', ',');?>
+											<br>
+											<?php 
+												foreach($res->adds as $add) { 
+													echo '₱ ' . number_format($add->price * $add->qty, 2, '.', ',') . '<br>';
+													@$total += $add->price * $add->qty;
+												}
+											?>
+										</td>
                   </tr>
+									
                   <?php 
+									
                     @$tot += $result->RPRICE;
                   } 
 
@@ -165,7 +204,8 @@
             <table class="table">
               <tr>
                 <th style="width:50%">Total:</th>
-                <td> ₱ <?php echo @$tot ; ?></td>
+                <!-- <td> ₱ <?php echo @$tot ; ?></td> -->
+                <td> ₱ <?php echo number_format(@$total, 2, '.', ',') ?></td>
               </tr> 
             </table>
           </div>

@@ -4,7 +4,7 @@ if(isset($_POST['avail'])){
 $_SESSION['from'] = $_POST['from'];
 $_SESSION['to']  = $_POST['to'];
 
-  redirect(WEB_ROOT. "index.php?page=5");
+  redirect("index.php?page=5");
 }
 
 ?>

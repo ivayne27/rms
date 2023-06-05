@@ -6,32 +6,35 @@ if (!defined('WEB_ROOT')) {
 $code=$_GET['code'];
 
  
-		$query="SELECT  `G_FNAME` ,  `G_LNAME` ,  `G_ADDRESS`,  p.`number`,  p.`address` ,  p.`TRANSDATE` ,  p.`CONFIRMATIONCODE`,  p.`client_name`  ,  `PQTY` ,  `SPRICE` ,p.`STATUS`,g.`GUESTID`,DATE(r.`ARRIVAL`) as ARRIVAL
-    FROM  `tblpayment` p,  `tblguest` g,`tblreservation` r
-				WHERE p.`GUESTID` = g.`GUESTID` AND p.`CONFIRMATIONCODE` = r.`CONFIRMATIONCODE` AND p.`CONFIRMATIONCODE`='".$code."'";
-		$mydb->setQuery($query);
-		$res = $mydb->loadSingleResult();
-    
-    $datenow = date("Y-m-d");
-    $rDate = date($res->ARRIVAL);
-    if($rDate == $datenow){
-      if($res->STATUS=='Confirmed'){
-        $stats = '<li class="next"><a href="'.WEB_ROOT .'admin/mod_reservation/controller.php?action=checkin&code='.$res->CONFIRMATIONCODE.
-      '">Confirmed &rarr;</a></li>';
-      }elseif($res->STATUS=='Checkedin'){
-      $stats = '<li class="next"><a href="'.WEB_ROOT .'admin/mod_reservation/controller.php?action=checkout&code='.$res->CONFIRMATIONCODE.
-      '">Checkin &rarr;</a></li>';
-      }elseif($res->STATUS=='Checkedout'){
-      $stats= "";
-      }else{
-        $stats = '<li class="next"><a href="'.WEB_ROOT .'admin/mod_reservation/controller.php?action=confirm&code='.$res->CONFIRMATIONCODE.
-      '">Confirm &rarr;</a></li>';
-      }
-    }else{
-      $stats = "";
-    }
+		// $query="SELECT  `G_FNAME` ,  `G_LNAME` ,  `G_ADDRESS`,  p.`number`,  p.`address` ,  p.`TRANSDATE` ,  p.`CONFIRMATIONCODE`,  p.`client_name`  ,  `PQTY` ,  `SPRICE` ,p.`STATUS`,g.`GUESTID`,DATE(r.`ARRIVAL`) as ARRIVAL
+    // FROM  `tblpayment` p,  `tblguest` g,`tblreservation` r
+		// 		WHERE p.`GUESTID` = g.`GUESTID` AND p.`CONFIRMATIONCODE` = r.`CONFIRMATIONCODE` AND p.`CONFIRMATIONCODE`='".$code."'";
+		// $mydb->setQuery($query);
+		// $res = $mydb->loadSingleResult();
+
+		// $reserve = new Reservation();
 		
-    $statsView = $res->STATUS;
+    
+    // $datenow = date("Y-m-d");
+    // $rDate = date($res->ARRIVAL);
+    // if($rDate == $datenow){
+    //   if($res->STATUS=='Confirmed'){
+    //     $stats = '<li class="next"><a href="/admin/mod_reservation/controller.php?action=checkin&code='.$res->CONFIRMATIONCODE.
+    //   '">Checkin &rarr;</a></li>';
+    //   }elseif($res->STATUS=='Checkedin'){
+    //   $stats = '<li class="next"><a href="/admin/mod_reservation/controller.php?action=checkout&code='.$res->CONFIRMATIONCODE.
+    //   '">Checkout &rarr;</a></li>';
+    //   }elseif($res->STATUS=='Checkedout'){
+    //   $stats= "";
+    //   }else{
+    //     $stats = '<li class="next"><a href="/admin/mod_reservation/controller.php?action=confirm&code='.$res->CONFIRMATIONCODE.
+    //   '">Confirm &rarr;</a></li>';
+    //   }
+    // }else{
+    //   $stats = "";
+    // }
+		
+    // $statsView = $res->STATUS;
  
 
 ?>
@@ -47,57 +50,6 @@ $code=$_GET['code'];
 			
 		?>
 		<!-- <div class="panel panel-primary"> -->
-			<div class="panel-body">
-			<h3 align="left">List of Services</h3> 					
-				<table id="example" style="font-size:12px" class="table table-striped table-hover table-responsive"  cellspacing="0">
-					
-				  <thead>
-				  	<tr  >
-				  	<th></th>
-				  		<th align="left"  width="100">
-				  		 
-				  		Image</th>
-				  		<!-- <th>Room#</th> -->
-				  		<th align="left"  width="200">Services</th>	
-				  		<!-- <th align="left" width="120">Description</th> -->
-				  		<th align="left" width="120">Accomodation</th> 
-				  		<th align="left" width="90">Person</th>
-				  		<th align="left"  width="200">Price</th>
-				  		<!-- <th># of Rooms</th> -->
-				  	</tr>	
-				  </thead>
-				  <tbody>
-				  	<?php 
-				  		$mydb->setQuery("SELECT *,ACCOMODATION FROM tblroom r, tblaccomodation a WHERE r.ACCOMID = a.ACCOMID ORDER BY  ROOMID ASC ");
-				
-				  		$cur = $mydb->loadResultList();
-
-						foreach ($cur as $result) {
-             
-				  		echo '<tr>';
-						echo '<td width="5%" align="center"><a  class="btn btn-success btn-xs"  href="controller.php?action=insertitem&code='.$code.'&roomid='.$result->ROOMID.'&price='. $result->PRICE.'&user='. $res->GUESTID.'" ><i class="icon-edit">Add item</a> </td>';
-				  		echo '<td align="left"  width="120"> 
-				  				<img src="../mod_room/'. $result->ROOMIMAGE.'" width="60" height="40" title="'. $result->ROOM .'"/></td>';
-				  		// echo '<td><a href="index.php?view=edit&id='.$result->ROOMID.'">' . ' '.$result->ROOMNUM.'</a></td>';
-						echo '<td><a href="index.php?view=edit&id='.$result->ROOMID.'">'. $result->ROOM.' ('. $result->ROOMDESC.')</a></td>';
-				  		// echo '<td>'. $result->ROOMDESC.'</td>';
-						// echo '<td>'. $result->ACCOMODATION.' ('. $result->ACCOMDESC.')</td>';
-						echo '<td>'. $result->ACCOMODATION.'</td>';
-				  		echo '<td>'. $result->NUMPERSON.'</td>';
-				  		
-				  		echo '<td> ₱'. $result->PRICE.'</td>';
-				  		// echo '<td>'.$result->ROOMNUM.' </td>';
-				  		echo '</tr>';
-				  	} 
-				  	?>
-				  </tbody>
-				 	
-				</table>
-				<div class="btn-group">
-				  
-				</div>
-				</form>
-	  		</div><!--End of Panel Body-->
 	  	<!-- </div> -->
 	  	<!--End of Main Panel-->
 
@@ -109,7 +61,8 @@ $code=$_GET['code'];
       </div>
     </div>
   </div>
- <div class="col-lg-3">  
+	<!-- Old View -->
+ 	<div class="col-lg-3 hide ">  
           <div class="box box-solid">
             <div class="box-header with-border">
               <h3 class="box-title ">Guest Information</h3><hr/>
@@ -134,12 +87,12 @@ $code=$_GET['code'];
             </div>
             <!-- /.box-body -->
           </div>
+ 	</div> 
 
- </div> 
 
- <div class="col-lg-9">     
+ <div class="">     
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-12">
                
                 <h1 class="page-header">Reservation
@@ -148,79 +101,106 @@ $code=$_GET['code'];
                      
                       if($statsView == 'Checkedin'){
                         // echo $statsView;`
-                        echo '<a onclick="document.getElementById(`id01`).style.display=`block`" class="btn btn-success btn-xs" ><i class="icon-edit">Add item</a>';
+                        // echo '<a onclick="document.getElementById(`id01`).style.display=`block`" class="btn btn-success btn-xs" ><i class="icon-edit">Add item</a>';
                       }else if($statsView == 'Checkedout'){
-                        echo '<a href="/hbs/guest/readmessage.php?code='.$code.'" class="btn btn-success btn-xs" ><i class="icon-edit">Print Receipt</a>'; 
+                        echo '<a href="/guest/readmessage.php?code='.$code.'" class="btn btn-success btn-xs" ><i class="icon-edit">Print Receipt</a>'; 
                       }
                     ?>
                 </h1> 
                 
             </div>
-        </div>
+        </div> -->
 
-        
+
+  
+				<div class="panel-body">
+					<?php 
+						$res = new Reservation();
+						$status = $res->getStatusByCode($_GET['code'])->STATUS;
+						if ($status === 'Checkedout') {
+							echo '<h2><a href="/guest/readmessage.php?code='.$_GET['code'].'" class="btn btn-success btn-xs" ><i class="icon-edit">Print Receipt</a></h2>';
+						}
+					?>
+					
+			<!-- <h3 align="left">List of Services</h3> -->
+				<table id="example" style="font-size:12px" class="table table-striped table-hover table-responsive"  cellspacing="0">
+					
+				  <thead>
+				  	<tr>
+				  	<th width="10">No.</th>
+				  		<!-- <th>Room#</th> -->
+				  		<th align="left"  width="200">Service</th>	
+				  		<th align="left"  width="200">Description</th>	
+				  		<th align="left"  width="200">Arrival</th>	
+				  		<!-- <th align="left" width="120">Description</th> -->
+				  		<th align="left" width="120">Departure</th> 
+				  		<th align="left" width="90">Day(s)</th>
+				  		<th align="left"  width="200">Price</th>
+				  		<!-- <th># of Rooms</th> -->
+				  	</tr>	
+				  </thead>
+				  <tbody>
         <!-- /.row --> 
 <?php
 
-$query="SELECT * 
-				FROM  `tblreservation` r,  `tblguest` g,  `tblroom` rm, tblaccomodation a
-				WHERE r.`ROOMID` = rm.`ROOMID` 
-				AND a.`ACCOMID` = rm.`ACCOMID` 
-				AND g.`GUESTID` = r.`GUESTID`  AND r.`STATUS`<>'Cancelled'
-				AND  `CONFIRMATIONCODE` = '".$code."'";
-$mydb->setQuery($query);
-$res = $mydb->loadResultList();
+// $query="SELECT * 
+// 				FROM  `tblreservation` r,  `tblguest` g,  `tblroom` rm, tblaccomodation a
+// 				WHERE r.`ROOMID` = rm.`ROOMID` 
+// 				AND a.`ACCOMID` = rm.`ACCOMID` 
+// 				AND g.`GUESTID` = r.`GUESTID`  AND r.`STATUS`<>'Cancelled'
+// 				AND  `CONFIRMATIONCODE` = '".$code."'";
+// $mydb->setQuery($query);
+// $res = $mydb->loadResultList();
+$reservation = new Reservation();
+$res = $reservation->reservationsByCode($_GET['code']);
 
-foreach ($res as $cur) {
-$image = WEB_ROOT . 'admin/mod_room/'.$cur->ROOMIMAGE;	
+foreach ($res as $key => $cur) {
+// $image = '/admin/mod_room/'.$cur->ROOMIMAGE;	
+// $day=dateDiff(date($cur->ARRIVAL),date($cur->DEPARTURE));
+$accomodation = new Accomodation();
+$accom = $accomodation->single_accomodation($cur->ACCOMOID);
+// var_dump($accom);die;
 $day=dateDiff(date($cur->ARRIVAL),date($cur->DEPARTURE));
-
 ?>
 
         <!-- Blog Post Row -->
-        <div class="row">
-            <!-- <div class="col-md-1 text-center">
-                <p><i class="fa fa-camera fa-4x"></i>
-                </p>
-                <p>June 17, 2014</p>
-            </div> -->
-            <div class="col-md-3"> 
-                    <img class="img-responsive img-hover" src="<?php echo $image ; ?>" alt=""> 
-            </div>
-            <div class="col-md-6">
-            <div class="box box-solid">
-            <ul class="nav nav-pills nav-stacked">
-            	<li><h3>
-                    <?php echo $cur->ROOM; ?> [ <small><?php echo $cur->ACCOMODATION; ?></small> ]
-                </h3>
-                </li>
-                <li></li>
-            </ul>
-            <td width="5%" align="center"><a  class="btn btn-danger btn-xs"  href="controller.php?action=deleteitem&code=<?php echo $code; ?>&RESERVEID=<?php echo $cur->RESERVEID; ?>" ><i class="icon-edit">Remove</a> </td>
-                <p><strong>ARRIVAL: </strong><?php echo date_format(date_create($cur->ARRIVAL),'m/d/Y');?></p>
-                <p><strong>DEPARTURE: </strong><?php echo date_format(date_create($cur->DEPARTURE),'m/d/Y'); ?></p>
-                <p><strong>Day(s): </strong><?php echo ($day==0) ? '1' : $day; ?></p>
-                <p><strong>PRICE: </strong>₱<?php echo $cur->RPRICE; ?></p>
-                <!-- <a class="btn btn-danger" href="<?php echo WEB_ROOT .'admin/mod_reservation/controller.php?id='.$cur->RESERVEID.'&action=cancelroom'; ?>">Cancel<i class="fa fa-angle-right"></i></a> -->
-            </div>
-        </div>
-        </div>
+        <!-- ≈ -->
         <!-- /.row -->
 
-        <hr>
+				<!-- New View -->
+				<tr>
+				<td><?php echo strval($key+1) ?></td>
+				<td><?php echo $accom->ACCOMODATION ?></td>
+				<td><?php echo $accom->ACCOMDESC; ?></td>
+				<td><?php echo date_format(date_create($cur->ARRIVAL),'m/d/Y h:i:s'); ?></td>
+				<td><?php echo date_format(date_create($cur->DEPARTURE),'m/d/Y h:i:s'); ?></td>
+				<td><?php echo ($day==0) ? '1' : $day; ?></td>
+				<td><?php echo $cur->RPRICE; ?></td>
+				<!-- <td align="center"><a  class="btn btn-danger btn-xs"  href="controller.php?action=deleteitem&code=<?php echo $code; ?>&RESERVEID=<?php echo $cur->RESERVEID; ?>" ><i class="icon-edit">Remove</a> </td> -->
+				</tr>
         
        <?php }  
 
        ?>
+
+
+				
+				 	
+				</table>
+				
+	  		</div>
+
       </div>
+
+
+			
+
+		
         <!-- Pager -->
         <div class="row">
             <ul class="pager">
-                <li class="previous"><a href="<?php echo WEB_ROOT .'admin/mod_reservation/index.php'; ?>">&larr; Back</a>
+                <li class="previous"><a href="<?php echo '/admin/mod_reservation/index.php'; ?>">&larr; Back</a>
                 </li>
-               <?php echo $stats; ?>
             </ul>
         </div>
         <!-- /.row -->
-
-        <hr>

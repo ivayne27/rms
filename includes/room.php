@@ -9,6 +9,7 @@ require_once(LIB_PATH.DS.'database.php');
 class Room{
 	
 	protected static $tbl_name = "tblroom";
+	protected static $tbl_accom = "tblaccomodation";
 	function db_fields(){
 		global $mydb;
 		return $mydb->getFieldsOnOneTable(self::$tbl_name);
@@ -26,6 +27,12 @@ class Room{
 			$cur = $mydb->loadSingleResult();
 			return $cur;
 	}
+	function accom_room($id=0){
+		global $mydb;
+		$mydb->setQuery("SELECT * FROM ".self::$tbl_accom." Where `ACCOMID`= {$id} LIMIT 1");
+		$cur = $mydb->loadSingleResult();
+		return $cur;
+}
 	function find_all_room($name=""){
 			global $mydb;
 			$mydb->setQuery("SELECT * 

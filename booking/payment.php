@@ -1,8 +1,9 @@
 <?php
 
+// var_dump($_SESSION);
 if (!isset($_SESSION['dragonhouse_cart'])) {
   # code...
-  redirect(WEB_ROOT.'index.php');
+  redirect('index.php');
 }
 
 function createRandomPassword() {
@@ -40,6 +41,9 @@ if(isset($_POST['btnsubmitbooking'])){
  
 
 if(!isset($_SESSION['GUESTID'])){
+	try {
+
+
 
 $sql = "SELECT * FROM `tblauto` WHERE `autoid`=1";
 $mydb->setQuery($sql);
@@ -68,9 +72,15 @@ $guest->create();
   $lastguest= $res->start;
    
 $_SESSION['GUESTID'] =   $lastguest;
+} catch ( \Exception $err) {
+	var_dump($err->getMessage());
+}
 
 }
  
+try {
+
+
     $count_cart = count($_SESSION['dragonhouse_cart']);
   
 
@@ -89,8 +99,14 @@ $_SESSION['GUESTID'] =   $lastguest;
             $reservation->PRORPOSE          = 'Travel';
             $reservation->STATUS            = 'Pending';
             $reservation->client_name       = $cnameApplied;
-            $reservation->create(); 
+						$reservation->BOOKDATE					= date_format(date_create('now'), 'Y-m-d h:i:s');
+						$reservation->REMARKS						= '';
+						$reservation->USERID						= 0;
+						$reservation->mnumber						= intval($_SESSION['mnumber']);
+						$reservation->address						= $_SESSION['addressNew'];
 
+            var_dump($reservation->create(),intval($_SESSION['mnumber'])); 
+						// var_dump($reservation);
             
             @$tot += $_SESSION['dragonhouse_cart'][$i]['dragonhouseroomprice'];
             }
@@ -118,13 +134,17 @@ $_SESSION['GUESTID'] =   $lastguest;
             unset($_SESSION['to']);
             $_SESSION['activity'] = 1;
 
+					} catch (\Exception $e) {
+						var_dump($e->getMessage());
+					}
+					return;
             ?> 
 
 <script type="text/javascript"> alert("Booking is successfully submitted!");</script>
 
             <?php
             
-    redirect( WEB_ROOT."index.php");
+    redirect( "/index.php");
 
 
 }
@@ -142,8 +162,8 @@ $_SESSION['GUESTID'] =   $lastguest;
  
 <div id="bread">
    <ol class="breadcrumb">
-      <li><a href="<?php echo WEB_ROOT ;?>index.php">Home</a> </li> 
-      <li><a href="<?php echo WEB_ROOT ;?>booking/">Booking Cart</a></li>  
+      <li><a href="index.php">Home</a> </li> 
+      <li><a href="/booking">Booking Cart</a></li>  
        <li class="active">Booking Details</li>
    </ol> 
 </div> 
@@ -164,7 +184,7 @@ $_SESSION['GUESTID'] =   $lastguest;
         </div>
         <div class="col-md-12">
           <label>Address:</label>
-          <?php echo isset($_SESSION['addressNew']) ? $_SESSION['addressNew']: ' '. ' ' . isset($_SESSION['addressNew'])  ? $_SESSION['addressNew'] : ' '; ?> 
+          <?php echo isset($_SESSION['addressNew']) ? $_SESSION['addressNew'] : (' '. ' ' . isset($_SESSION['addressNew'])  ? $_SESSION['addressNew'] : ' '); ?> 
         </div>
         <div class="col-md-12"> 
         <label>Phone #:</label>

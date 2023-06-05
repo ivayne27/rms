@@ -413,5 +413,25 @@ $(document).ready(function()
                     });
                 });
 
+						$(".add-item-accomodation").on("click", function () {
+							var $this = $(this);
+							// console.log($this.data());
+							window.location.href = `/admin/mod_reservation/controller.php?action=insertitem&code=${$this.data('code')}&accomid=${$this.data('accomid')}&price=${$this.data('price')}&user=${$this.data('user')}&qty=${$this.data('qty')}`
+							// href="controller.php?action=insertitem&code='.$code.'&accomid='.$result->ACCOMID.'&price='. $result->price.'&user='. $user .'"
+						});
+
+						$(".accom-input-qty[accomid]").on("input", function () {
+							var $accomid = $(this).attr('accomid');
+							var $val = $(this).val();
+
+							// $(`.add-item-accomodation[data-code=${$code}]`).data('qty', $val);
+							var $el = $(`.add-item-accomodation[data-accomid=${$accomid}]`).first();
+							if (!$val) {
+								$val=1;
+							}
+							$el.attr('data-qty', $val);
+							// console.log($el.data());
+							// console.log($(`.add-item-accomodation[data-accomid=${$accomid}]`));
+						});
 
             });

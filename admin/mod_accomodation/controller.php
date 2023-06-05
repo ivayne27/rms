@@ -32,12 +32,14 @@ function doInsert(){
 		
 		$accomodation->ACCOMODATION =$_POST['ACCOMODATION'];
 		$accomodation->ACCOMDESC =  $_POST['ACCOMDESC'];
+		$accomodation->max_person_included =  $_POST['max_person_included'];
+		$accomodation->price =  $_POST['price'];
 		
 		
 		 $istrue = $accomodation->create(); 
 		 if ($istrue == 1){
 		 	message("New [". $name ."] created successfully!", "success");
-		 	redirect('index.php');
+		 	redirect('/admin/mod_room/index.php');
 		 	
 		 }
 
@@ -60,8 +62,8 @@ function doEdit(){
 			
 			$accomodation->update($_POST['ACCOMID']); 
 			
-		 	message("New [". $_POST['ACCOMODATION'] ."] Updated successfully!", "success");
-		 	redirect('index.php');
+		 	message("Edited [". $_POST['ACCOMODATION'] ."] Updated successfully!", "success");
+		 	redirect('/admin/mod_room/index.php');
 			 	
 	
 		
@@ -70,18 +72,25 @@ function doEdit(){
 }
 
 function doDelete(){
-	 @$id=$_POST['selector'];
-		  $key = count($id);
+	$accomodation = new Accomodation();
+	if (isset($_GET['id'])) {
+		//delete single
+		$accomodation->delete($_GET['id']);
+	} else {
 		//multi delete using checkbox as a selector
-		
-	for($i=0;$i<$key;$i++){
+		@$id=$_POST['selector'];
+		  $key = count($id);
+		for($i=0;$i<$key;$i++){
 	 
-		$accomodation = new Accomodation();
-		$accomodation->delete($id[$i]);
+			
+			$accomodation->delete($id[$i]);
+		}
 	}
+		
+	
 
 		message("Accomodation already Deleted!","info");
-		redirect('index.php');
+		redirect('/admin/mod_room/index.php');
 
 }
 

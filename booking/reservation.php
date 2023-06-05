@@ -2,7 +2,7 @@
 
 if (!isset($_SESSION['dragonhouse_cart'])) {
   # code...
-  redirect(WEB_ROOT.'index.php');
+  redirect('/index.php');
 }
 
 

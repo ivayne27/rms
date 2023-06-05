@@ -11,7 +11,7 @@ if(isset($_GET['id'])){
    unset($_SESSION['pay']);
    unset($_SESSION['dragonhouse_cart']);
    message("The cart is empty.","success");
-  redirect(WEB_ROOT."booking/");
+  redirect("booking/");
 
  }
 
@@ -116,10 +116,10 @@ if(isset($_GET['id'])){
              
               if (isset($_SESSION['GUESTID'])){
                 ?>
-                <div  class="button " ><a href="<?php echo WEB_ROOT; ?>booking/index.php?view=payment" name="continue">Continue Booking</a></div>
+                <div  class="button " ><a href="/booking/index.php?view=payment" name="continue">Continue Booking</a></div>
                <?php 
               }else{ ?>
-                 <div  class="button " ><a href="<?php echo WEB_ROOT; ?>booking/index.php?view=logininfo"  name="continue">Continue Booking</a></div>
+                 <div  class="button " ><a href="/booking/index.php?view=logininfo"  name="continue">Continue Booking</a></div>
              <?php
               }
             }

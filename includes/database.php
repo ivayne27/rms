@@ -37,9 +37,15 @@ class Database {
 	}
 	
 	function executeQuery() {
-		$result = mysqli_query($this->conn,$this->sql_string);
-		$this->confirm_query($result);
-		return $result;
+		try {
+			$result = mysqli_query($this->conn,$this->sql_string);
+			$this->confirm_query($result);
+			// var_dump(mysqli_error($this->conn));
+			return $result;
+		} catch (\Exception $err) {
+			var_dump($err->getMessage());
+		}
+		
 	}	
 	
 	private function confirm_query($result) {
