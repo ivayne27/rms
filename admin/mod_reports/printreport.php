@@ -91,7 +91,7 @@ require_once("../../includes/initialize.php");
 		if ($reserves >0){
 			foreach ($reserves as $res) {
           $days =  dateDiff(date($res->ARRIVAL),date($res->DEPARTURE));
-					$total = $res->RPRICE;
+					$total += $res->RPRICE;
              ?>
 
 						 <!-- Main Reserve -->
