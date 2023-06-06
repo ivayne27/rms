@@ -103,7 +103,7 @@ CREATE TABLE `tblpay` (
   `confirmation_code` varchar(50) NOT NULL,
   `payment` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
 
 INSERT INTO `tblpay` (`id`, `confirmation_code`, `payment`) VALUES
 (3,	'e6z77jvg',	200),
