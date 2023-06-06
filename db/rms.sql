@@ -103,15 +103,15 @@ CREATE TABLE `tblpay` (
   `confirmation_code` varchar(50) NOT NULL,
   `payment` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- INSERT INTO `tblpay` (`id`, `confirmation_code`, `payment`) VALUES
--- (3,	'e6z77jvg',	200),
--- (4,	'e6z77jvg',	1000),
--- (7,	'e6z77jvg',	50),
--- (8,	'e6z77jvg',	1500),
--- (9,	'z7i2w2md',	50),
--- (10,	'z7i2w2md',	200);
+INSERT INTO `tblpay` (`id`, `confirmation_code`, `payment`) VALUES
+(3,	'e6z77jvg',	200),
+(4,	'e6z77jvg',	1000),
+(7,	'e6z77jvg',	50),
+(8,	'e6z77jvg',	1500),
+(9,	'z7i2w2md',	50),
+(10,	'z7i2w2md',	200);
 
 DROP TABLE IF EXISTS `tblpayment`;
 CREATE TABLE `tblpayment` (
