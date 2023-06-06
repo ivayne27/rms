@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <i class="fa fa-globe"></i>RESORT Report
+            <i class="fa fa-globe"></i> RESORT Report
             <small class="pull-right">Date: <?php echo date('m/d/Y'); ?></small>
           </h2>
         </div>
@@ -81,8 +81,8 @@
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
-            <i class="fa fa-globe"></i><?php echo (isset($_POST['categ'])) ? $_POST['categ'] : ''; ?>
-            <small class="pull-right"> <?php echo (isset($_POST['start'])) ? 'Checkedin Date :' .$_POST['start'] : ''; ?> <?php echo (isset($_POST['end'])) ? ' Checkedout Date :' .$_POST['end'] : ''; ?> </small>
+            <?php echo (isset($_POST['categ'])) ? '<i class="fa fa-globe"></i> ' . $_POST['categ'] : ''; ?>
+            <small class="pull-right"> <?php echo (isset($_POST['start'])) ? 'From Date :' .$_POST['start'] : ''; ?> <?php echo (isset($_POST['end'])) ? ' To Date :' .$_POST['end'] : ''; ?> </small>
           </h2>
         </div>
         <!-- /.col -->
