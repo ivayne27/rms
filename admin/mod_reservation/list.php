@@ -36,7 +36,7 @@
 								"date">Date:</label>
 							<div class="row">
 								<div class="col-md-4 booking_dropdown">
-										<input type="date" id="serviceDatePicker" class="datepicker-x booking_input booking_input_a booking_out form-control input-sm" placeholder="Select Date" name="date" required="required" value="<?php echo date('m/d/Y');?>" >
+										<input type="date" id="serviceDatePicker" class="datepicker-x booking_input booking_input_a booking_out form-control input-sm" placeholder="Select Date" name="date" required="required" value="<?php echo date('Y-m-d');?>" >
 								</div>
 							</div>
 						</div>

@@ -370,6 +370,24 @@ $(document).ready(function()
 
 });
 
+function fetchAvailableServices ($val) {
+	$.get(`/admin/mod_reservation/controller.php?action=fetchservices&date=${$val}`, function (data) {
+		var $data = JSON.parse(data);
+
+		const key = 'ACCOMID';
+
+		const arrayUniqueByKey = [...new Map($data.map(item =>
+			[item[key], item])).values()];
+
+		var $el = $("#accomodation");
+		$el.empty(); // remove old options
+		$.each(arrayUniqueByKey, function(key,value) {
+			$el.append($("<option></option>")
+				.attr("value", value.ACCOMID).text(value.ACCOMODATION));
+		});
+	});
+}
+
 	  $(document).ready(function ($) {
                 // delegate calls to data-toggle="lightbox"
                 $(document).delegate('*[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', 'click', function(event) {
@@ -448,28 +466,11 @@ $(document).ready(function()
 						// 				return [ array.indexOf(string) == -1 ]
 						// 		}
 						// });
-
+						var $todayDate = new Date().toISOString().slice(0, 10);
+						fetchAvailableServices($todayDate);
 						$('#serviceDatePicker').on('input',function(e){
 							var $val = $(this).val();
-							// alert($val);
-							$.get(`/admin/mod_reservation/controller.php?action=fetchservices&date=${$val}`, function (data) {
-								var $data = JSON.parse(data);
-
-								const key = 'ACCOMID';
-
-								const arrayUniqueByKey = [...new Map($data.map(item =>
-									[item[key], item])).values()];
-
-									console.log(arrayUniqueByKey);
-
-
-								var $el = $("#accomodation");
-								$el.empty(); // remove old options
-								$.each(arrayUniqueByKey, function(key,value) {
-									$el.append($("<option></option>")
-										.attr("value", value.ACCOMID).text(value.ACCOMODATION));
-								});
-							});
+							fetchAvailableServices($val);
 
 						});
 
