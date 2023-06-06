@@ -4,7 +4,7 @@ require_once("../includes/initialize.php");
 // (i.e. logging out)
 
 // 1. Find the session
-session_start();
+session_destroy();
 
 // 2. Unset all the session variables
 // unset( $_SESSION['ADMIN_ID'] );
@@ -19,4 +19,5 @@ foreach($_SESSION as $k => $v){
  	
 // 4. Destroy the session
 redirect("/admin/index.php?logout=1");
+
 ?>
