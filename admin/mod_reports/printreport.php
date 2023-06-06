@@ -122,8 +122,22 @@ require_once("../../includes/initialize.php");
 												}
 											?>
 										</td>
-                    <td><?php echo date_format(date_create($res->ARRIVAL),'m/d/Y');?></td>
-                    <td><?php echo date_format(date_create($res->DEPARTURE),'m/d/Y');?></td>
+                    <td><?php 
+										$arrival = date_create($res->ARRIVAL);
+										if (strpos(date_format($arrival, 'm/d/Y H:i:s'), '00:00:00') !== false || strpos(date_format($arrival, 'm/d/Y H:i:s'), '12:00:00') !== false) {
+											echo date_format($arrival, 'm/d/Y');
+										} else {
+											echo date_format($arrival, 'm/d/Y h:i A');
+										}
+										// echo date_format(date_create($res->ARRIVAL),'m/d/Y');?></td>
+                    <td><?php
+										$departure = date_create($res->DEPARTURE);
+										if (strpos(date_format($departure, 'm/d/Y H:i:s'), '00:00:00') !== false || strpos(date_format($departure, 'm/d/Y H:i:s'), '12:00:00') !== false) {
+											echo date_format($departure, 'm/d/Y');
+										} else {
+											echo date_format($departure, 'm/d/Y h:i A');
+										}
+										//  echo date_format(date_create($res->DEPARTURE),'m/d/Y');?></td>
                     <td><?php echo ($days==0) ? '1' : $days;?></td>
                     <td> ₱ <?php echo number_format($res->RPRICE * $res->accom_qty, 2, '.', ',');?>
 											<br>

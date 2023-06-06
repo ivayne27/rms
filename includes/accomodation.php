@@ -142,6 +142,22 @@ class Accomodation{
 			if(!$mydb->executeQuery()) return false; 	
 	
 	}
+
+	public function getAvailableServices($date) {
+		global $mydb;
+		$sql = "SELECT `ACCOMID`, `ACCOMODATION`, `tblreservation`.`ARRIVAL`, `tblreservation`.`STATUS` FROM `tblaccomodation` LEFT JOIN `tblreservation` ON `tblreservation`.`ACCOMOID` = `tblaccomodation`.`ACCOMID` ";
+		$mydb->setQuery($sql);
+		$cur = $mydb->loadResultList();
+
+		$available_services = array_filter($cur, function ($c) use ($date) {
+			
+			$arrival = date_format(date_create($c->ARRIVAL), 'Y-m-d');
+			return $arrival != $date || $c->STATUS == "Checkedout";
+
+		});
+		return $available_services;
+	
+	}
 		
 }
 ?>

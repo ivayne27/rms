@@ -44,12 +44,15 @@ switch ($action) {
 	case 'markaspaid' :
 		doMarkAsPaid();
 	break;
+	case 'fetchservices' :
+		doFetchServices();
+	break;
 	}
 function doCheckout(){
 
 		global $mydb;
-
-		$sql = "UPDATE `tblreservation` SET `STATUS`='Checkedout' WHERE `CONFIRMATIONCODE` ='" . $_GET['code'] ."'"; 
+		$dateNow = date('Y-m-d h:i:s', strtotime('now'));
+		$sql = "UPDATE `tblreservation` SET `STATUS`='Checkedout', `DEPARTURE`='".$dateNow."' WHERE `CONFIRMATIONCODE` ='" . $_GET['code'] ."'"; 
 		$mydb->setQuery($sql);
 		$mydb->executeQuery(); 
 
@@ -65,7 +68,9 @@ function doCheckin(){
  
  global $mydb;
 
-$sql = "UPDATE `tblreservation` SET `STATUS`='Checkedin' WHERE `CONFIRMATIONCODE` ='" . $_GET['code'] ."'"; 
+ $dateNow = date('Y-m-d h:i:s', strtotime('now'));
+
+$sql = "UPDATE `tblreservation` SET `STATUS`='Checkedin', `ARRIVAL`='".$dateNow."' WHERE `CONFIRMATIONCODE` ='" . $_GET['code'] ."'"; 
 $mydb->setQuery($sql);
 $mydb->executeQuery(); 
  
@@ -295,8 +300,17 @@ function doMarkAsPaid() {
 	$res = $reservation->markAsPaid($_GET['code']);
 	if ($res) {
 		message('Mark as paid success.', 'success');
-	} else 
+	} else {
 		message('Mark as paid failed.', 'danger');
 	}
-	redirect('/admin/mod_reservation/index.php')
+	redirect('/admin/mod_reservation/index.php');
+	}
+
+function doFetchServices() {
+
+	$accomodation = new Accomodation();
+	$getAvailable = $accomodation->getAvailableServices($_GET['date']);
+	echo json_encode(array_values($getAvailable));
+}
+	
 ?>

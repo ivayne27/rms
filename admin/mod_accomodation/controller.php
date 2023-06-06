@@ -55,9 +55,10 @@ function doEdit(){
 
 		$accomodation = new Accomodation();
 		 
-	
 		$accomodation->ACCOMODATION =$_POST['ACCOMODATION'];
 		$accomodation->ACCOMDESC =  $_POST['ACCOMDESC'];
+		$accomodation->max_person_included =  $_POST['max_person_included'];
+		$accomodation->price =  $_POST['price'];
 			
 			
 			$accomodation->update($_POST['ACCOMID']); 

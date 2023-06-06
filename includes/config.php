@@ -5,7 +5,7 @@
 * Date Created:	october 27, 2013
 * Revised By:		
 */
-
+date_default_timezone_set('Asia/Manila');
 //Database Constants
 defined('DB_SERVER') ? null : define("DB_SERVER","localhost");//define our database server
 defined('DB_USER') ? null : define("DB_USER","rms_user");		  //define our database user	

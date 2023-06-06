@@ -31,7 +31,7 @@ $(document).ready(function()
 	setHeader();
 	initMenu();
 	initSearch();
-	initDatePicker();
+	// initDatePicker();
 	initCustomSelect();
 	initGallery();
 	initRoomsSlider();
@@ -130,6 +130,8 @@ $(document).ready(function()
 
 	function initDatePicker()
 	{
+		// $("#serviceDatePicker").datepicker
+
 		if($('.datepicker').length)
 		{
 			var datePickers = $('.datepicker');
@@ -144,7 +146,11 @@ $(document).ready(function()
 				// var dateFinal = dateM + '/' + dateD + '/' + dateY;
 				var placeholder = dp.data('placeholder');
 				dp.val(placeholder);
-				dp.datepicker();
+				dp.datepicker({
+					onSelect: function(dateText) {
+						console.log(dateText);
+					}
+				});
 			});
 		}
 	}
@@ -432,6 +438,39 @@ $(document).ready(function()
 							$el.attr('data-qty', $val);
 							// console.log($el.data());
 							// console.log($(`.add-item-accomodation[data-accomid=${$accomid}]`));
+						});
+
+						// var array = ["06-06-2023","06-07-2023","06-08-2023"]
+
+						// $('#serviceDatePicker').datepicker({
+						// 		beforeShowDay: function(date){
+						// 				var string = $.datepicker.formatDate('mm/dd-yy', date);
+						// 				return [ array.indexOf(string) == -1 ]
+						// 		}
+						// });
+
+						$('#serviceDatePicker').on('input',function(e){
+							var $val = $(this).val();
+							// alert($val);
+							$.get(`/admin/mod_reservation/controller.php?action=fetchservices&date=${$val}`, function (data) {
+								var $data = JSON.parse(data);
+
+								const key = 'ACCOMID';
+
+								const arrayUniqueByKey = [...new Map($data.map(item =>
+									[item[key], item])).values()];
+
+									console.log(arrayUniqueByKey);
+
+
+								var $el = $("#accomodation");
+								$el.empty(); // remove old options
+								$.each(arrayUniqueByKey, function(key,value) {
+									$el.append($("<option></option>")
+										.attr("value", value.ACCOMID).text(value.ACCOMODATION));
+								});
+							});
+
 						});
 
             });

@@ -189,6 +189,8 @@ $res = $mydb->loadSingleResult();
 					$accom = $accomodation->single_accomodation($cur->ACCOMOID);
 					// var_dump($accom);die;
 					$day=dateDiff(date($cur->ARRIVAL),date($cur->DEPARTURE));
+					$arrival = date_create($cur->ARRIVAL);
+					$departure = date_create($cur->DEPARTURE);
 					?>
 
 									<!-- New View -->
@@ -196,8 +198,19 @@ $res = $mydb->loadSingleResult();
 									<td><?php echo strval($key+1) ?></td>
 									<td><?php echo $accom->ACCOMODATION ?></td>
 									<td><?php echo $accom->ACCOMDESC; ?></td>
-									<td><?php echo date_format(date_create($cur->ARRIVAL),'m/d/Y h:i:s'); ?></td>
-									<td><?php echo date_format(date_create($cur->DEPARTURE),'m/d/Y h:i:s'); ?></td>
+									<td><?php 
+										if (strpos(date_format($arrival, 'm/d/Y H:i:s'), '00:00:00') !== false || strpos(date_format($arrival, 'm/d/Y H:i:s'), '12:00:00') !== false) {
+											echo date_format($arrival, 'm/d/Y');
+										} else {
+											echo date_format($arrival, 'm/d/Y h:i A');
+										}
+									?></td>
+									<td><?php 
+									if (strpos(date_format($departure, 'm/d/Y H:i:s'), '00:00:00') !== false || strpos(date_format($departure, 'm/d/Y H:i:s'), '12:00:00') !== false) {
+										echo date_format($departure, 'm/d/Y');
+									} else {
+										echo date_format($departure, 'm/d/Y h:i A');
+									}?></td>
 									<td><?php echo ($day==0) ? '1' : $day; ?></td>
 									<td><?php echo $cur->RPRICE; ?></td>
 									<td align="center"><a  class="btn btn-danger btn-xs"  href="controller.php?action=deleteitem&code=<?php echo $code; ?>&RESERVEID=<?php echo $cur->RESERVEID; ?>" ><i class="icon-edit">Remove</a> </td>

@@ -31,6 +31,18 @@
           </div>
 
 					<div class="form-group">
+						<div class="row">
+							<label class="col-md-2 control-label" for=
+								"date">Date:</label>
+							<div class="row">
+								<div class="col-md-4 booking_dropdown">
+										<input type="date" id="serviceDatePicker" class="datepicker-x booking_input booking_input_a booking_out form-control input-sm" placeholder="Select Date" name="date" required="required" value="<?php echo date('m/d/Y');?>" >
+								</div>
+							</div>
+						</div>
+          </div>
+
+					<div class="form-group">
             <div class="row">
               <label class="col-md-2 control-label" for=
               "service">Service:</label>
@@ -53,17 +65,7 @@
             </div>
           </div>
 
-          <div class="form-group">
-						<div class="row">
-							<label class="col-md-2 control-label" for=
-								"date">Date:</label>
-							<div class="row">
-								<div class="col-md-4 booking_dropdown">
-										<input type="text" class="datepicker booking_input booking_input_a booking_out form-control input-sm" placeholder="Select Date" name="date" required="required" value="<?php echo date('m/d/Y');?>" >
-								</div>
-							</div>
-						</div>
-          </div>
+          
 
 					<div class="form-group">
             <div class="row">
@@ -160,7 +162,13 @@ $datenow = date("Y-m-d");
 
 				  			 
 foreach ($cur as $key => $result) {
-	$rDate = date('Y-m-d',strtotime($result->ARRIVAL));
+	$rDate = date_create($result->ARRIVAL);
+	if (strpos(date_format($rDate, 'm/d/Y H:i:s'), '00:00:00') !== false || strpos(date_format($rDate, 'm/d/Y H:i:s'), '12:00:00') !== false) {
+		$rDate = date_format($rDate, 'm/d/Y');
+	} else {
+		$rDate = date_format($rDate, 'm/d/Y h:i A');
+	}
+
 	$adds = $reservation->additional_reservations($result->CONFIRMATIONCODE);
 	// var_dump($result);
 	// var_dump($adds);
@@ -277,7 +285,7 @@ foreach ($cur as $key => $result) {
 			<a href="controller.php?action=cancel&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-sm btn-mt-4 btn-cancel" >
 			</i>Cancel</a>
 			<?php 
-				if($datenow == $rDate){
+				if($datenow == date_format(date_create($rDate),'Y-m-d')){
 					echo '<a href="controller.php?action=checkin&code='.$result->CONFIRMATIONCODE.'" class="btn btn-success btn-sm btn-mt-4" ><i class="icon-edit">Check in</a>';
 				}
 			?>
