@@ -17,12 +17,12 @@
 							<div class="row">
 								<div class="col-md-4">
 									<input name="deptid" type="hidden" value="">
-									<input class="form-control input-sm" id="first_name" name="first_name" placeholder=
+									<input required class="form-control input-sm" id="first_name" name="first_name" placeholder=
 											"First name" type="text" value="">
 								</div>
 								<div class="col-md-4">
 									<input name="deptid" type="hidden" value="">
-									<input class="form-control input-sm" id="last_name" name="last_name" placeholder=
+									<input required class="form-control input-sm" id="last_name" name="last_name" placeholder=
 											"Last name" type="text" value="">
 								</div>
 							</div>
@@ -36,7 +36,7 @@
 								"date">Date:</label>
 							<div class="row">
 								<div class="col-md-4 booking_dropdown">
-										<input type="date" id="serviceDatePicker" class="datepicker-x booking_input booking_input_a booking_out form-control input-sm" placeholder="Select Date" name="date" required="required" value="<?php echo date('Y-m-d');?>" >
+										<input required type="date" id="serviceDatePicker" class="datepicker-x booking_input booking_input_a booking_out form-control input-sm" placeholder="Select Date" name="date" required="required" value="<?php echo date('Y-m-d');?>" >
 								</div>
 							</div>
 						</div>
