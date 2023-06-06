@@ -152,9 +152,10 @@ class Accomodation{
 		$available_services = array_filter($cur, function ($c) use ($date) {
 			
 			$arrival = date_format(date_create($c->ARRIVAL), 'Y-m-d');
-			return $arrival != $date || $c->STATUS == "Checkedout";
+			return $arrival != $date || $c->STATUS == "Checkedout" || $c->STATUS == NULL;
 
 		});
+
 		return $available_services;
 	
 	}
