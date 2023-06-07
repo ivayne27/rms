@@ -145,7 +145,7 @@ class Accomodation{
 
 	public function getAvailableServices($date) {
 		global $mydb;
-		$sql = "SELECT `ACCOMID`, `ACCOMODATION`, `tblreservation`.`ARRIVAL`, `tblreservation`.`STATUS` FROM `tblaccomodation` LEFT JOIN `tblreservation` ON `tblreservation`.`ACCOMOID` = `tblaccomodation`.`ACCOMID` ";
+		$sql = "SELECT `ACCOMID`, `ACCOMODATION`, `tblreservation`.`ARRIVAL`, `tblreservation`.`STATUS`, DATE(`tblreservation`.`ARRIVAL`) as date FROM `tblaccomodation` LEFT JOIN `tblreservation` ON `tblreservation`.`ACCOMOID` = `tblaccomodation`.`ACCOMID` WHERE `tblreservation`.`STATUS` NOT IN ('Checkedin', 'Pending', 'Confirmed') OR `tblreservation`.`STATUS` IS NULL";
 		$mydb->setQuery($sql);
 		$cur = $mydb->loadResultList();
 

@@ -192,12 +192,12 @@ $departure = date_create($cur->DEPARTURE);
 						?>
 				</td>
 				<td><?php echo ($day==0) ? '1' : $day; ?></td>
-				<td><?php echo $cur->RPRICE; ?></td>
+				<td><?php echo $accom->price; ?></td>
 				<!-- <td align="center"><a  class="btn btn-danger btn-xs"  href="controller.php?action=deleteitem&code=<?php echo $code; ?>&RESERVEID=<?php echo $cur->RESERVEID; ?>" ><i class="icon-edit">Remove</a> </td> -->
 				</tr>
         
        <?php }  
-
+				
        ?>
 
 

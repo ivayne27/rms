@@ -212,7 +212,7 @@ $res = $mydb->loadSingleResult();
 										echo date_format($departure, 'm/d/Y h:i A');
 									}?></td>
 									<td><?php echo ($day==0) ? '1' : $day; ?></td>
-									<td><?php echo $cur->RPRICE; ?></td>
+									<td><?php echo $accom->price; ?></td>
 									<td align="center"><a  class="btn btn-danger btn-xs"  href="controller.php?action=deleteitem&code=<?php echo $code; ?>&RESERVEID=<?php echo $cur->RESERVEID; ?>" ><i class="icon-edit">Remove</a> </td>
 									</tr>
 									
@@ -287,6 +287,9 @@ $res = $mydb->loadSingleResult();
 				  		$cur = $mydb->loadResultList();
 						foreach ($cur as $result) {
 							$user = isset($_GET['id']) ? $_GET['id'] : 0;
+							if ($result->max_person_included != 1) {
+								continue;
+							}
 				  		echo '<tr>';
 							// href="controller.php?action=insertitem&code='.$code.'&accomid='.$result->ACCOMID.'&price='. $result->price.'&user='. $user .'"
 						echo '<td width="5%" align="center">

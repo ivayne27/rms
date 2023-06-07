@@ -67,7 +67,7 @@
 
           
 
-					<div class="form-group">
+					<!-- <div class="form-group">
             <div class="row">
               <label class="col-md-2 control-label" for=
               "pax">Person:</label>
@@ -78,7 +78,7 @@
 								</div>
 							</div>
             </div>
-          </div>
+          </div> -->
 					<div class="form-group">
             <div class="row">
               <label class="col-md-2 control-label" for=
@@ -141,7 +141,7 @@
 <!--<td width="10"><strong>Confirmation</strong></td>-->
 <td width="80"><strong>Arrival Date</strong></td>
 <!-- <td width="80"><strong>Confimation Code</strong></td> -->
-<td width="70"><strong>Services</strong></td>
+<td width="100"><strong>Services</strong></td>
 <td width="10"><strong>Qty</strong></td>
 <td width="50"><strong>Total Price</strong></td>
 <td width="80"><strong>Payments</strong></td>
@@ -228,11 +228,19 @@ foreach ($cur as $key => $result) {
 	}
 
 	if ($result->paid != 1) {
-	echo'<form action="controller.php?action=addpay" method="POST">
-			<input type="hidden" name="code" value="'.$result->CONFIRMATIONCODE.'" >
-			<input type="text" name="pay" class="form-control input-sm btn-mt-4" placeholder="Payment" oninput="this.value=this.value.replace(/[^0-9]/g,'."''".');">
-			<button type="submit" class="btn-mt-4 btn btn-sm btn-success">Pay</button>
-		</form>';
+		if ($result->STATUS === 'Cancelled') {
+			echo '-';
+		} else {
+			if ($total_payments < $total_sum) {
+				echo	'<form action="controller.php?action=addpay" method="POST">
+				<input type="hidden" name="code" value="'.$result->CONFIRMATIONCODE.'" >
+				<input type="text" name="pay" class="form-control input-sm btn-mt-4" placeholder="Payment" oninput="this.value=this.value.replace(/[^0-9]/g,'."''".');">
+				<button type="submit" class="btn-mt-4 btn btn-sm btn-success">Pay</button>
+			</form>';
+			}
+			
+		}
+	
 	} else {
 		echo '<span class="text-success"><strong><i class="fa fa-check"></i>Paid</strong></span><br>';
 		echo '<span class="text-primary">
@@ -302,9 +310,11 @@ foreach ($cur as $key => $result) {
 			<a href="index.php?view=view&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-info btn-sm btn-mt-4" >
 				View
 			</a>
+			<?php if ($total_payments >= $total_sum) { ?>
 			<a href="controller.php?action=checkout&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-warning btn-sm btn-mt-4" >
 				Check out
 			</a>
+			<?php } ?>
 			<a href="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4"  >
 			<i class="fa fa-trash"></i>
 				Delete
@@ -326,7 +336,16 @@ foreach ($cur as $key => $result) {
 				Edit
 			</a>
 			
-	<?php }else{
+	<?php } else if ($result->STATUS === 'Cancelled') { ?>
+		<a href="index.php?view=view&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-info btn-sm btn-mt-4" >
+				View
+			</a>
+			<a href="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4"  >
+				<i class="fa fa-trash"></i>
+				Delete
+			</a>
+			
+	<?php }	else{
 			?>
 			<a href="index.php?view=view&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-primary btn-sm btn-mt-4" >
 				View
