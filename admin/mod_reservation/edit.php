@@ -270,7 +270,7 @@ $res = $mydb->loadSingleResult();
 				  		 
 				  		Image</th> -->
 				  		<!-- <th>Room#</th> -->
-				  		<th align="left"  width="100">Services</th>	
+				  		<!-- <th align="left"  width="100">Services</th>	 -->
 				  		<th align="left" width="200">Description</th>
 				  		<!-- <th align="left" width="120">Accomodation</th>  -->
 				  		<th align="left" width="10">Person</th>
@@ -300,7 +300,7 @@ $res = $mydb->loadSingleResult();
 				  		// echo '<td align="left"  width="120"> 
 				  				// <img src="../mod_room/'. $result->ROOMIMAGE.'" width="60" height="40" title="'. $result->ROOM .'"/></td>';
 				  		// echo '<td><a href="index.php?view=edit&id='.$result->ROOMID.'">' . ' '.$result->ROOMNUM.'</a></td>';
-						echo '<td>'. $result->ACCOMODATION.'</a></td>';
+						// echo '<td>'. $result->ACCOMODATION.'</a></td>';
 				  		// echo '<td>'. $result->ROOMDESC.'</td>';
 						// echo '<td>'. $result->ACCOMODATION.' ('. $result->ACCOMDESC.')</td>';
 						echo '<td>'. $result->ACCOMDESC.'</td>';
