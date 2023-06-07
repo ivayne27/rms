@@ -146,16 +146,42 @@ class Accomodation{
 	public function getAvailableServices($date) {
 		global $mydb;
 		// $sql = "SELECT `ACCOMID`, `ACCOMODATION`, `tblreservation`.`ARRIVAL`, `tblreservation`.`STATUS`, DATE(`tblreservation`.`ARRIVAL`) as date FROM `tblaccomodation` LEFT JOIN `tblreservation` ON `tblreservation`.`ACCOMOID` = `tblaccomodation`.`ACCOMID` WHERE `tblreservation`.`STATUS` NOT IN ('Checkedin', 'Pending', 'Confirmed') OR `tblreservation`.`STATUS` IS NULL";
-		$sql = "SELECT `ACCOMID`, `ACCOMODATION`, `tblreservation`.`ARRIVAL`, `tblreservation`.`STATUS`, DATE(`tblreservation`.`ARRIVAL`) as date_arrival FROM `tblaccomodation` LEFT JOIN `tblreservation` ON `tblreservation`.`ACCOMOID` = `tblaccomodation`.`ACCOMID` WHERE (DATE(`tblreservation`.`ARRIVAL`) != '".$date."' OR `tblreservation`.`STATUS` IN ('Cancelled','Checkedout')) OR `tblreservation`.`STATUS` IS NULL";
+		// $sql = "SELECT `ACCOMID`, `ACCOMODATION`, `tblreservation`.`ARRIVAL`, `tblreservation`.`STATUS`, DATE(`tblreservation`.`ARRIVAL`) as date_arrival FROM `tblaccomodation` LEFT JOIN `tblreservation` ON `tblreservation`.`ACCOMOID` = `tblaccomodation`.`ACCOMID` WHERE (DATE(`tblreservation`.`ARRIVAL`) != '".$date."' OR `tblreservation`.`STATUS` IN ('Cancelled','Checkedout')) OR `tblreservation`.`STATUS` IS NULL";
+		$sql ="SELECT `ACCOMID`, `ACCOMODATION`, `tblreservation`.`ARRIVAL`, `tblreservation`.`STATUS`, DATE(`tblreservation`.`ARRIVAL`) as date_arrival FROM `tblaccomodation` LEFT JOIN `tblreservation` ON `tblreservation`.`ACCOMOID` = `tblaccomodation`.`ACCOMID`";
 		$mydb->setQuery($sql);
 		$cur = $mydb->loadResultList();
+		// var_dump($cur);
 
-		$available_services = array_filter($cur, function ($c) use ($date) {
-			
-			$arrival = date_format(date_create($c->ARRIVAL), 'Y-m-d');
-			return $arrival != $date || $c->STATUS == "Checkedout" || $c->STATUS == NULL;
+		$remove = [];
 
+		$accomodation = new Accomodation();
+		$accoms = $accomodation->listOfaccomodation();
+		// var_dump($accoms);
+
+		$reservation = new Reservation();
+		$reserved = $reservation->getReservedForToday($date);
+		// var_dump($reserved);
+
+		$reserved_ids = array_column($reserved, 'ACCOMOID');
+		// var_dump($reserved_ids);
+		// die;
+
+
+		$available_services = array_filter($accoms, function ($accom) use($reserved_ids) {
+			return !in_array($accom->ACCOMID, $reserved_ids);
 		});
+		// $available_services = array_filter($cur, function ($c) use ($date, $remove) {
+			
+		// 	$arrival = date_format(date_create($c->ARRIVAL), 'Y-m-d');
+		// 	if ($arrival != $date || $c->STATUS == "Checkedout" || $c->STATUS == NULL) {
+		// 		return $c;
+		// 	} else {
+		// 		array_push($remove, $c->ACCOMID);
+		// 	}
+
+
+		// });
+		// var_dump($remove);
 
 		return $available_services;
 	

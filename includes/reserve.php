@@ -100,6 +100,13 @@ class Reservation{
 		if(!$mydb->executeQuery()) return false; 	
 		return true;
 	}
+
+	function getReservedForToday($date) {
+		global $mydb;
+		$sql = "SELECT * FROM `tblreservation` WHERE DATE(`tblreservation`.`ARRIVAL`) = '".$date."' AND `tblreservation`.`STATUS` NOT IN ('Checkedout', 'Cancelled')";
+		$mydb->setQuery($sql);
+		return $mydb->loadResultList();
+	}
  	 
 
 	
