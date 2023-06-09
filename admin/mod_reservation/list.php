@@ -6,7 +6,7 @@
 
 <!-- FORM Start add reservation -->
 
-<form class="form-horizontal well span6" action="/admin/mod_reservation/controller.php?action=additem" method="POST">
+<form id="addReservationForm" class="form-horizontal well span6" action="/admin/mod_reservation/controller.php?action=additem" method="POST">
 
 	<fieldset>
 		<legend>Add Reservation</legend>
@@ -36,7 +36,7 @@
 								"date">Date:</label>
 							<div class="row">
 								<div class="col-md-4 booking_dropdown">
-										<input required type="date" id="serviceDatePicker" class="datepicker-x booking_input booking_input_a booking_out form-control input-sm" placeholder="Select Date" name="date" required="required" value="<?php echo date('Y-m-d');?>" >
+										<input required type="date" id="serviceDatePicker" class="datepicker-x booking_input booking_input_a booking_out form-control input-sm" placeholder="Select Date" name="date" required="required" value="<?php echo date('Y-m-d');?>" min="<?php echo date("Y-m-d"); ?>" >
 								</div>
 							</div>
 						</div>
@@ -67,18 +67,17 @@
 
           
 
-					<!-- <div class="form-group">
+					<div class="form-group" id="descDiv" style="display:none;">
             <div class="row">
               <label class="col-md-2 control-label" for=
-              "pax">Person:</label>
+              "desc">Description:</label>
 							<div class="row">
 								<div class="col-md-4">
-										<input required class="form-control input-sm" id="pax" name="pax" placeholder=
-											"Number of persons" type="text" min="1" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="">
+										<span id="descText" style="line-height:30px; font-size:12px"></span>
 								</div>
 							</div>
             </div>
-          </div> -->
+          </div>
 					<div class="form-group">
             <div class="row">
               <label class="col-md-2 control-label" for=
@@ -297,7 +296,7 @@ foreach ($cur as $key => $result) {
 					echo '<a href="controller.php?action=checkin&code='.$result->CONFIRMATIONCODE.'" class="btn btn-success btn-sm btn-mt-4" ><i class="icon-edit">Check in</a>';
 				}
 			?>
-			<a href="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4"  >
+			<a data-action="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4 delete-action"  >
 			<i class="fa fa-trash "></i> Delete</a>
 			<a href="index.php?view=edit&code=<?php echo $result->CONFIRMATIONCODE; ?>&id=<?php echo $result->GUESTID; ?>" class="btn btn-primary btn-sm btn-mt-4"  >
 			<i class="fa fa-edit"></i>
@@ -315,7 +314,7 @@ foreach ($cur as $key => $result) {
 				Check out
 			</a>
 			<?php } ?>
-			<a href="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4"  >
+			<a data-action="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4 delete-action"  >
 			<i class="fa fa-trash"></i>
 				Delete
 			</a>
@@ -327,7 +326,7 @@ foreach ($cur as $key => $result) {
 		}elseif($result->STATUS == 'Checkedout'){ ?>
 			<a href="index.php?view=view&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-primary btn-sm btn-mt-4" >
 			View</a>
-			<a href="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4"  >
+			<a data-action="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4 delete-action"  >
 				<i class="fa fa-trash"></i>
 				Delete
 			</a>
@@ -340,7 +339,7 @@ foreach ($cur as $key => $result) {
 		<a href="index.php?view=view&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-info btn-sm btn-mt-4" >
 				View
 			</a>
-			<a href="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4"  >
+			<a data-action="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4 delete-action"  >
 				<i class="fa fa-trash"></i>
 				Delete
 			</a>
@@ -356,7 +355,7 @@ foreach ($cur as $key => $result) {
 			<a href="controller.php?action=confirm&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-success btn-sm btn-mt-4"  >
 				Confirm
 			</a>
-			<a href="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4"  >
+			<a data-action="controller.php?action=delete&code=<?php echo $result->CONFIRMATIONCODE; ?>" class="btn btn-danger btn-sm btn-mt-4 delete-action"  >
 				<i class="fa fa-trash"></i>
 				Delete
 			</a>

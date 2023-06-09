@@ -65,8 +65,8 @@
 
             <div class="col-md-8">
               <input name="deptid" type="hidden" value="">
-               <input class="form-control input-sm" id="PHONE" name="PHONE" placeholder=
-                  "Contact #:" type="text" value="">
+               <input class="form-control input-sm" id="PHONE" min="1" name="PHONE" placeholder=
+                  "Contact #:" type="text" value="" oninput="this.value=this.value.replace(/[^0-9]/g,'');">
             </div>
           </div>
         </div>

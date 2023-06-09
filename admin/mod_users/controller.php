@@ -22,7 +22,7 @@ function doInsert(){
 	if ($_POST['UNAME'] == "" OR $_POST['USERNAME'] == "" OR $_POST['UPASS'] == "") {
 		$messageStats = false;
 			message("All fields required!", "error");
-			redirect("index.php?view=add");
+			redirect("/admin/mod_users/index.php?view=add");
 		
 	}else{
 
@@ -42,7 +42,7 @@ function doInsert(){
 			$user->USER_NAME 	= $_POST['USERNAME'];
 			$user->UPASS 		= sha1($_POST['UPASS']);
 			$user->ROLE 		=  $_POST['ROLE'];
-			$user->PHONE 		= $_POST['PHONE'];
+			$user->PHONE 		= intval($_POST['PHONE']);
 			$istrue = $user->create(); 
 
 			 if ($istrue == 1){

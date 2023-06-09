@@ -7,7 +7,7 @@
 		<!-- <div class="panel panel-primary"> -->
 			<div class="panel-body">
 			<h3 align="left">List of Services</h3>
-			    <form action="/admin/mod_accomodation/controller.php?action=delete" Method="POST">  					
+			    <form id="deleteServicesForm" action="/admin/mod_accomodation/controller.php?action=delete" Method="POST">  					
 				<table id="example" style="font-size:12px" class="table table-striped table-hover table-responsive"  cellspacing="0">
 					
 				  <thead>
@@ -48,9 +48,9 @@
 				  		echo '<td> ₱'. $result->price.'</td>';
 				  		// echo '<td>'.$result->ROOMNUM.' </td>';
 							echo '<td> 
-								<a href="/admin/mod_accomodation/index.php?view=edit&id='.$result->ACCOMID.'" class="btn btn-primary mb-1 btn-sm btn-mt-4" ><i class="fa fa-edit"></i> Edit</a>
-								<a href="/admin/mod_accomodation/controller.php?action=delete&id='.$result->ACCOMID.'" class="btn btn-danger mb-1 btn-sm btn-mt-4" ><i class="fa fa-trash"></i> Delete</a>
-									 </td>';
+								<a href="/admin/mod_accomodation/index.php?view=edit&id='.$result->ACCOMID.'" class="btn btn-primary mb-1 btn-sm btn-mt-4" ><i class="fa fa-edit"></i> Edit</a>';
+								// <a href="/admin/mod_accomodation/controller.php?action=delete&id='.$result->ACCOMID.'" class="btn btn-danger mb-1 btn-sm btn-mt-4" ><i class="fa fa-trash"></i> Delete</a>
+								// 	 </td>';
 				  		echo '</tr>';
 				  	} 
 				  	?>
@@ -59,7 +59,7 @@
 				</table>
 				<div class="btn-group">
 				  <a href="/admin/mod_accomodation/index.php?view=add" class="btn btn-default">New</a>
-				  <button type="submit" class="btn btn-default" name="delete"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
+				  <button type="button" id="deleteServicesButton" class="btn btn-default" name="delete"><span class="glyphicon glyphicon-trash"></span> Delete Selected</button>
 				</div>
 				</form>
 	  		</div><!--End of Panel Body-->

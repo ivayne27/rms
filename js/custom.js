@@ -378,12 +378,28 @@ function fetchAvailableServices ($val) {
 
 		const arrayUniqueByKey = [...new Map($data.map(item =>
 			[item[key], item])).values()];
-
+			console.log(arrayUniqueByKey);
+		const FindWholeResort = arrayUniqueByKey.find( ($arr) => $arr.max_person_included >= 50);
+		console.log(FindWholeResort);
 		var $el = $("#accomodation");
-		$el.empty(); // remove old options
+		$el.empty();
+		if (!FindWholeResort) {
+			// $("#addReservationForm").hide();
+			var $date = new Date();
+			$date.setDate($date.getDate() + 1);
+			var $nextDate = $date.toISOString().slice(0, 10);
+			console.log($nextDate);
+			$("#serviceDatePicker").val($nextDate).attr('min', $nextDate);
+			fetchAvailableServices($nextDate);
+			return;
+		};
+		 // remove old options
 		$.each(arrayUniqueByKey, function(key,value) {
+			if (value.max_person_included == '1') {
+				return;
+			}
 			$el.append($("<option></option>")
-				.attr("value", value.ACCOMID).text(value.ACCOMODATION));
+				.attr("value", value.ACCOMID).text(value.ACCOMODATION).attr('data-description', value.ACCOMDESC));
 		});
 	});
 }
@@ -472,6 +488,54 @@ function fetchAvailableServices ($val) {
 							var $val = $(this).val();
 							fetchAvailableServices($val);
 
+						});
+
+						$("#accomodation").on('change', function() {
+							var $option = $(this).find(`option[value=${$(this).val()}]`);
+							$("#descDiv").show('fast').find("#descText").text($option.data('description'));
+						});
+
+						$(".delete-action").on("click", function () {
+							var $data = $(this).data();
+							
+							$.confirm({
+								title: $data.title ? $data.title : 'Delete Reservation?',
+								content: 'Confirm to delete.',
+								type: 'red',
+								typeAnimated: true,
+								buttons: {
+										delBtn: {
+												text: 'Delete',
+												btnClass: 'btn-red',
+												action: function(){
+													window.location.href = $data.action;
+												}
+										},
+										close: function () {
+										}
+								}
+							});
+						});
+
+						$("#deleteServicesButton").on("click", function () {
+							var $selectedCount = $('input[name="selector[]"]:checked').length;
+							$.confirm({
+								title: `Delete ${$selectedCount} Service(s)?`,
+								content: 'Confirm to delete.',
+								type: 'red',
+								typeAnimated: true,
+								buttons: {
+										delBtn: {
+												text: 'Delete',
+												btnClass: 'btn-red',
+												action: function(){
+													$("#deleteServicesForm").trigger("submit");
+												}
+										},
+										close: function () {
+										}
+								}
+							});
 						});
 
             });

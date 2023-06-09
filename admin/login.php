@@ -58,7 +58,7 @@ if (isset($_POST['btnlogin'])) {
     $res = $user::AuthenticateUser($uname, $h_upass);
     //then it check if the function return to true
     if($res == true){
-      ?>   <script type="text/javascript">
+     	if ($_SESSION['ADMIN_UROLE'] === 'Administrator') { ?>   <script type="text/javascript">
           //then it will be redirected to home.php
           window.location = "/admin/mod_room/index.php";
         </script>
@@ -66,6 +66,11 @@ if (isset($_POST['btnlogin'])) {
     
     
     } else {
+			?>    <script type="text/javascript">
+               window.location = "/admin/mod_reservation/index.php";
+                </script>
+        <?php
+		} } else {
 ?>    <script type="text/javascript">
                 alert("Username or Password Not Registered! Contact Your administrator.");
                 window.location = "index.php";

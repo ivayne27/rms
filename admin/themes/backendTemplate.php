@@ -16,6 +16,7 @@
 <link href="/admin/css/style.css" rel="stylesheet" >
 <link rel="stylesheet" type="text/css" href="/admin/css/jquery.dataTables.css">
 <link href="/admin/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="/admin/css/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script type="text/javascript" language="javascript" src="/admin/js/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="/admin/js/jquery.dataTables.js"></script>
@@ -24,6 +25,7 @@
 
 <script type="text/javascript" src="/admin/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="/admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/admin/js/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="/js/custom.js" charset="UTF-8"></script>
 </head>
 <script type="text/javascript">
@@ -174,7 +176,9 @@ $(document).ready(function() {
 	        <div class="collapse navbar-collapse">
 	          <ul class="nav navbar-nav">
 	            <!-- <li class="<?php echo (currentpage() == 'index.php') ? "active" : false;?>"><a href="/admin/index.php" >Home</a></li> -->
+							<?php if($_SESSION['ADMIN_UROLE']=="Administrator"){ ?>
 	            <li class="<?php echo (currentpage() == 'mod_room') ? "active" : false;?>"><a href="/admin/mod_room/index.php">Services</a></li>
+							<?php } ?>
 	            <!-- <li class="<?php echo (currentpage() == 'mod_accomodation') ? "active" : false;?>"><a href="/admin/mod_accomodation/index.php">Accomodation</a></li> -->
 				
 	            <li class="<?php echo (currentpage() == 'mod_reservation') ? "active" : false;?>">
