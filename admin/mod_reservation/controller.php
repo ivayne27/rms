@@ -47,6 +47,9 @@ switch ($action) {
 	case 'fetchservices' :
 		doFetchServices();
 	break;
+	case 'fetchdisableddates' :
+		doFetchDisabledDates();
+	break;
 	}
 function doCheckout(){
 
@@ -311,6 +314,12 @@ function doFetchServices() {
 	$accomodation = new Accomodation();
 	$getAvailable = $accomodation->getAvailableServices($_GET['date']);
 	echo json_encode(array_values($getAvailable));
+}
+
+function doFetchDisabledDates() {
+	$reservation = new Reservation();
+	$disabled = $reservation->getDisabledDates();
+	echo json_encode(array_values($disabled));
 }
 	
 ?>

@@ -373,26 +373,36 @@ $(document).ready(function()
 function fetchAvailableServices ($val) {
 	$.get(`/admin/mod_reservation/controller.php?action=fetchservices&date=${$val}`, function (data) {
 		var $data = JSON.parse(data);
-
+		console.log($data);
+		if ($data.length < 1) {
+			var $date = new Date();
+				$date.setDate($date.getDate() + 1);
+				var $nextDate = $date.toISOString().slice(0, 10);
+				// console.log($nextDate);
+				$("#serviceDatePicker").val($nextDate).attr('min', $nextDate);
+				fetchAvailableServices($nextDate);
+				return;
+		}
+		// console.log($data, 'data');
 		const key = 'ACCOMID';
 
 		const arrayUniqueByKey = [...new Map($data.map(item =>
 			[item[key], item])).values()];
-			console.log(arrayUniqueByKey);
-		const FindWholeResort = arrayUniqueByKey.find( ($arr) => $arr.max_person_included >= 50);
-		console.log(FindWholeResort);
+			// console.log(arrayUniqueByKey);
+		// const FindWholeResort = arrayUniqueByKey.find( ($arr) => $arr.max_person_included >= 50);
+		// console.log(FindWholeResort);
 		var $el = $("#accomodation");
 		$el.empty();
-		if (!FindWholeResort) {
-			// $("#addReservationForm").hide();
-			var $date = new Date();
-			$date.setDate($date.getDate() + 1);
-			var $nextDate = $date.toISOString().slice(0, 10);
-			console.log($nextDate);
-			$("#serviceDatePicker").val($nextDate).attr('min', $nextDate);
-			fetchAvailableServices($nextDate);
-			return;
-		};
+		// if (!FindWholeResort) {
+		// 	// $("#addReservationForm").hide();
+		// 	var $date = new Date();
+		// 	$date.setDate($date.getDate() + 1);
+		// 	var $nextDate = $date.toISOString().slice(0, 10);
+		// 	console.log($nextDate);
+		// 	$("#serviceDatePicker").val($nextDate).attr('min', $nextDate);
+		// 	fetchAvailableServices($nextDate);
+		// 	return;
+		// };
 		 // remove old options
 		$.each(arrayUniqueByKey, function(key,value) {
 			if (value.max_person_included == '1') {
@@ -404,7 +414,45 @@ function fetchAvailableServices ($val) {
 	});
 }
 
+var $todayDate = new Date().toISOString().slice(0, 10);
+
 	  $(document).ready(function ($) {
+			fetchAvailableServices($todayDate);
+			function initializeSelectDate($disabledDates=[], $defaultDate=null) {
+				$("#serviceDatePicker").flatpickr(
+					{
+						minDate: "today",
+						dateFormat: "Y-m-d",
+						disable: $disabledDates,
+						defaultDate: $defaultDate
+					}
+				);
+			}
+			function loopToNextDateAvailable($disabledDates) {
+				var date = new Date($todayDate);
+				for (i = 1; i <= 365; i++) {
+					$nextDate = date.setDate(date.getDate() + 1);
+					$nextDate = new Date($nextDate).toISOString().slice(0, 10);
+					if ($disabledDates.includes($nextDate)) {
+						continue;
+					} else {
+						console.log('yow', $nextDate, $disabledDates);
+						initializeSelectDate($disabledDates, $nextDate);
+						fetchAvailableServices($nextDate);
+						// $("#serviceDatePicker").val($nextDate);
+						break;
+					}
+				}
+			}
+			initializeSelectDate();
+			$.get(`/admin/mod_reservation/controller.php?action=fetchdisableddates`, function (data) {
+				var $data = JSON.parse(data);
+				initializeSelectDate($data);
+				if ($data.includes($todayDate)) {
+					loopToNextDateAvailable($data);
+				}
+			})
+			
                 // delegate calls to data-toggle="lightbox"
                 $(document).delegate('*[data-toggle="lightbox"]:not([data-gallery="navigateTo"])', 'click', function(event) {
                     event.preventDefault();
@@ -482,8 +530,8 @@ function fetchAvailableServices ($val) {
 						// 				return [ array.indexOf(string) == -1 ]
 						// 		}
 						// });
-						var $todayDate = new Date().toISOString().slice(0, 10);
-						fetchAvailableServices($todayDate);
+						
+						// fetchAvailableServices($todayDate);
 						$('#serviceDatePicker').on('input',function(e){
 							var $val = $(this).val();
 							fetchAvailableServices($val);
@@ -538,4 +586,6 @@ function fetchAvailableServices ($val) {
 							});
 						});
 
+						
+						
             });

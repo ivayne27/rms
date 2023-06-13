@@ -229,6 +229,26 @@ class Reservation{
 			if(!$mydb->executeQuery()) return false; 	
 	
 	}
+
+	public function getDisabledDates() {
+		// Get dates from reservation where whole resort
+		global $mydb;
+		$mydb->setQuery("Select * from tblreservation LEFT JOIN `tblaccomodation` ON `tblaccomodation`.`ACCOMID` = `tblreservation`.`ACCOMOID` WHERE `REMARKS` = '' AND `tblaccomodation`.`max_person_included` >= 50");
+		$reserves = $mydb->loadResultList();
+		$disabledDates = array_map(function ($r) {
+			return date_format(date_create($r->ARRIVAL), 'Y-m-d' );
+		}, $reserves);
+
+		// no available services - all has been selected
+		$mydb->setQuery("Select DISTINCT(`ARRIVAL`), count(`ARRIVAL`) as count from tblreservation LEFT JOIN `tblaccomodation` ON `tblaccomodation`.`ACCOMID` = `tblreservation`.`ACCOMOID` WHERE `REMARKS` = '' GROUP BY `ARRIVAL`");
+		$allSelected = $mydb->loadResultList();
+		foreach ($allSelected as $selected) {
+			if ($selected->count >= 3) {
+				array_push($disabledDates, date_format(date_create($selected->ARRIVAL), 'Y-m-d' ));
+			}
+		}
+		return $disabledDates;
+	}
 		
 }
 ?>

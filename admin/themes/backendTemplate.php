@@ -18,6 +18,7 @@
 <link href="/admin/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="/admin/css/jquery-confirm.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="/admin/css/flatpickr.min.css">
 <script type="text/javascript" language="javascript" src="/admin/js/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="/admin/js/jquery.dataTables.js"></script>
 <script type="text/javascript" language="javascript" src="/admin/js/bootstrap.min.js"></script>
@@ -27,6 +28,7 @@
 <script type="text/javascript" src="/admin/js/locales/bootstrap-datetimepicker.uk.js" charset="UTF-8"></script>
 <script type="text/javascript" src="/admin/js/jquery-confirm.min.js"></script>
 <script type="text/javascript" src="/js/custom.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/admin/js/flatpickr.min.js"></script>
 </head>
 <script type="text/javascript">
 //execute if all html elemen has been completely loaded

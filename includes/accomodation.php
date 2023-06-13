@@ -44,6 +44,19 @@ class Accomodation{
 			return $row_count;
 	}
 
+	function accomodationIsWholeResort($accom_id) {
+		global $mydb;
+			$mydb->setQuery("SELECT * FROM ".self::$tbl_name." Where `ACCOMID`= {$accom_id} LIMIT 1");
+			$cur = $mydb->loadSingleResult();
+			if ($cur->max_person_included >= 50) {
+				return true;
+			}
+
+			return false;
+			// var_dump($cur,'awews');die;
+			// return $cur;
+	}
+
 	
 	/*---Instantiation of Object dynamically---*/
 	static function instantiate($record) {
@@ -158,18 +171,45 @@ class Accomodation{
 		$accoms = $accomodation->listOfaccomodation();
 		// var_dump($accoms);
 
+		
+
 		$reservation = new Reservation();
 		$reserved = $reservation->getReservedForToday($date);
-		// var_dump($reserved);
+		
+		// if whole resort,
+		// remove services
+		$findWholeResort = array_filter($reserved, function($res) use($accomodation) {
+			return $accomodation->accomodationIsWholeResort($res->ACCOMOID);
+		});
+
+		// var_dump($findWholeResort);die;
+
+		if (!empty($findWholeResort)) {
+			// remove services;
+			return [];
+		}
 
 		$reserved_ids = array_column($reserved, 'ACCOMOID');
-		// var_dump($reserved_ids);
-		// die;
-
-
+		
+		
 		$available_services = array_filter($accoms, function ($accom) use($reserved_ids) {
 			return !in_array($accom->ACCOMID, $reserved_ids);
 		});
+
+		if (count($accoms) > count($available_services)) {
+			// find whole resort
+			$wholeResort = array_filter($available_services, function ($service) {
+				return $service->max_person_included >= 50;
+			});
+
+			if (!empty($wholeResort)) {
+				// if not whole resort,
+				// remove whole resort in available services.
+				$available_services = array_filter($available_services, function ($service) {
+					return $service->max_person_included < 50;
+				});
+			}
+		}
 		// $available_services = array_filter($cur, function ($c) use ($date, $remove) {
 			
 		// 	$arrival = date_format(date_create($c->ARRIVAL), 'Y-m-d');
@@ -182,6 +222,7 @@ class Accomodation{
 
 		// });
 		// var_dump($remove);
+		// var_dump($available_services);
 
 		return $available_services;
 	

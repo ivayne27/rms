@@ -31,6 +31,9 @@
 				border: 1px solid black;
 				border-collapse: collapse;
 			}
+			td{
+				padding: 0 5px;
+			}
 			@media print {
 	.myDivToPrint {
 			background-color: white;
@@ -101,7 +104,6 @@
 					<tr> 
             <!-- <td style="text-align: center;"><?php echo $res->ACCOMODATION ;?></td> -->
             <td style="text-align: center;"><?php echo $res->ACCOMDESC ?></td>
-            <td style="text-align: center;"> ₱<?php echo number_format($res->price, 2, '.', ',') ;?></td>
             <td style="text-align: center;"><?php
 						$arrival = date_create($res->ARRIVAL);
 						if (strpos(date_format($arrival, 'm/d/Y H:i:s'), '00:00:00') !== false || strpos(date_format($arrival, 'm/d/Y H:i:s'), '12:00:00') !== false) {
@@ -119,6 +121,7 @@
 						}
 						// echo date_format(date_create($res->DEPARTURE),'m/d/Y');?></td>
             <td style="text-align: center;"><?php echo ($days==0) ? '1' : $days;?></td>
+            <td style="text-align: center;"> ₱<?php echo number_format($res->price, 2, '.', ',') ;?></td>
 						<td style="text-align: center;"> <?php echo $res->accom_qty;?></td>
             <td style="text-align: center;"> ₱<?php  echo number_format($res->price * $res->accom_qty, 2, '.', ',') ;?></td>
           </tr>
